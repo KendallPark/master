@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
   validate :mizzou_med_students_only
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
 private
   def mizzou_med_students_only
     if /@health.missouri.edu$/.match(email).nil?
