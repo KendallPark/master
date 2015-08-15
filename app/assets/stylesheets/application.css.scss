@@ -20,6 +20,7 @@ body { padding-top: 60px; }
 // Whatever application styles you have go last
 @import "base";
 @import "home";
+@import "devise";
 
 @import "font-awesome-sprockets";
 @import "font-awesome";
