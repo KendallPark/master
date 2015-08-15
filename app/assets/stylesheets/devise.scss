@@ -37,4 +37,12 @@
   .devise-links {
     margin-top: 10px;
   }
+
+  &.devise-edit {
+    text-align: left;
+
+    input {
+      text-align: left;
+    }
+  }
 }
