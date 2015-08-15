@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
-input:focus, textarea:focus {
-    outline: none;
+input:focus, textarea:focus, button:focus {
+    outline: 0 !important;
 }
 
 div.alert {
@@ -10,4 +10,8 @@ div.alert {
 
 body {
   font-family: 'Ubuntu';
+}
+
+#main_container {
+  padding-top: 20px;
 }

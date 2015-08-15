@@ -39,7 +39,7 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div class="container">
+  <div id="main_container" class="container">
     <% flash.each do |type, content| %>
       <% if content.respond_to?('each')
         content.each do |item| %>
