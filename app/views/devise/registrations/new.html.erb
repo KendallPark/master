@@ -7,20 +7,23 @@
         <%= devise_error_messages! %>
 
         <div class="field form-group">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, class: "form-control" %>
+          <%= f.label :email %>
+          <div class="input-group">
+            <%= f.email_field :email, autofocus: true, class: "form-control mizzou-email" %>
+            <div class="input-group-addon">@health.missouri.edu</div>
+          </div>
         </div>
 
         <div class="field form-group">
           <%= f.label :password %>
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
-          <% end %><br />
+          <% end %>
           <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
         </div>
 
         <div class="field checkbox">
-          <%= f.label :password_confirmation %><br />
+          <%= f.label :password_confirmation %>
           <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
         </div>
 

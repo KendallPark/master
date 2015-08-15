@@ -10,6 +10,19 @@
     // font-family: 'PixelAria';
   }
 
+  .input-group {
+    input.mizzou-email {
+      text-align: right;
+    }
+    .input-group-addon {
+      padding-left: 0;
+      border-right: 0;
+      border-top: 0;
+      border-radius: 0;
+      background-color: inherit;
+    }
+  }
+
   input {
     text-align: center;
   }
