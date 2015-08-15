@@ -1,0 +1,12 @@
+/* Webfont: Pretendo */@font-face {
+    font-family: 'Pretendo';
+    src: url('Pretendo1.eot'); /* IE9 Compat Modes */
+    src: url('Pretendo1.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Pretendo1.woff') format('woff'), /* Modern Browsers */
+         url('Pretendo1.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('Pretendo1.svg#Pretendo') format('svg'); /* Legacy iOS */
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
