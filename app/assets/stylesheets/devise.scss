@@ -3,11 +3,18 @@
 .devise {
   text-align: center;
 
-  h1, h2, h3, h4, h5, h6 {
+  h2 {
     font-family: "Minecraft";
   }
   label {
     // font-family: 'PixelAria';
+  }
+
+  #error_explanation {
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
   }
 
   .input-group {
