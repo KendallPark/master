@@ -8,18 +8,18 @@
 
         <div class="field form-group">
           <%= f.label :first_name %>
-          <%= f.text_field :email, autofocus: true, class: "form-control" %>
+          <%= f.text_field :first_name, autofocus: true, class: "form-control" %>
         </div>
 
         <div class="field form-group">
           <%= f.label :last_name %>
-          <%= f.text_field :email, class: "form-control" %>
+          <%= f.text_field :last_name, class: "form-control" %>
         </div>
 
         <div class="field form-group">
-          <%= f.label :email %>
+          <%= f.label :email_prefix %>
           <div class="input-group">
-            <%= f.email_field :email, class: "form-control mizzou-email" %>
+            <%= f.text_field :email_prefix, class: "form-control mizzou-email" %>
             <div class="input-group-addon">@health.missouri.edu</div>
           </div>
         </div>
