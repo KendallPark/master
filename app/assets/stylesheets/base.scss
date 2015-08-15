@@ -1,7 +1,13 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+
 input:focus, textarea:focus {
     outline: none;
 }
 
 div.alert {
   margin-top: 5px;
+}
+
+body {
+  font-family: 'Ubuntu';
 }
