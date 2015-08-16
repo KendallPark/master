@@ -156,7 +156,8 @@ var FlipCard = React.createClass({
         onBlur: this.handleBlur,
         onKeyDown: this.handleKeyDown,
         onDoubleClick: this.handleDoubleClick,
-        onClick: this.handleClick
+        onClick: this.handleClick,
+        style: this.props.style,
       },
       React.createElement(
         'div',
