@@ -47,6 +47,8 @@ gem 'acts-as-taggable-on', '~> 3.4'
 
 gem 'tworgy-spaced-repetition'
 
+gem 'rails-api'
+
 source 'https://rails-assets.org' do
   # gem 'rails-assets-reactable' # currently using 0.11 beta
   # gem 'rails-assets-classnames'

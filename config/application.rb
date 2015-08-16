@@ -25,5 +25,8 @@ module Master
 
     # fonts
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+
+    # Rails API
+    config.api_only = false
   end
 end
