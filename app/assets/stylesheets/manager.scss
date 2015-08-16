@@ -1,0 +1,70 @@
+@import "bootswatch/paper/variables";
+
+.ReactFlipCard {
+  // margin: 25px;
+  text-align: center;
+}
+.ReactFlipCard,
+.ReactFlipCard__Front,
+.ReactFlipCard__Back {
+  box-sizing: border-box;
+  width: (880px * 0.3);
+  height: (630px * 0.3);
+
+  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit (konqueror) browsers */
+  -ms-user-select: none; /* IE10+ */
+}
+.ReactFlipCard__Front,
+.ReactFlipCard__Back {
+  border-radius: 4px;
+  padding: 25px;
+  div {
+    height: 100%;
+    vertical-align: middle;
+  }
+  div.edit-controls {
+    a.left {
+      position: relative;
+      float: left;
+      top: -20px;
+      left: -15px;
+    }
+
+    a.right {
+      position: relative;
+      float: right;
+      top: -20px;
+      right: -15px;
+    }
+
+    i {
+      font-size: 24px;
+      color: #ddd;
+      &:hover {
+        color: #999;
+      }
+    }
+  }
+}
+.ReactFlipCard__Front {
+
+}
+.ReactFlipCard__Back {
+
+}
+
+#new_card_modal {
+  textarea {
+    height: 100px;
+  }
+}
+
+.modal-footer {
+  text-align: left;
+}
+
+.modal-footer-content {
+  width: 570px;
+}
