@@ -28,5 +28,8 @@ module Master
 
     # Rails API
     config.api_only = false
+
+    # React
+    config.react.addons = true # defaults to false
   end
 end

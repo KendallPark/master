@@ -26,3 +26,17 @@ body {
 .clickable {
   cursor: pointer;
 }
+
+.vh-center {
+  // min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  // min-height: 100vh; /* These two lines are counted as one :-)       */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
