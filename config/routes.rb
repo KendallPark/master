@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  get "train", to: "trainer#index"
+
+  patch "train/score/:card_id", to: "trainer#score"
+
   scope ":username", :as => "user" do
     get 'cards', to: 'manager#index'
   end
