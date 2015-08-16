@@ -6,12 +6,16 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
   validates :email, presence: true, email: true
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates_presence_of :first_name, :last_name, :email_prefix
   validate :mizzou_med_students_only
+  alias_attribute :username, :email_prefix
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def to_param
+    username
   end
 
 private
