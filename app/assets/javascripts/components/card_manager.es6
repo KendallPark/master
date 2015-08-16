@@ -101,20 +101,34 @@ class CardManager extends React.Component {
     var modalInstance = this.getNewCardModal();
     var flipcards = [];
     for (var card of this.state.cards) {
+      var tags = [];
+      for (var tag of card.tags) {
+        tags.push(
+          <a href="#" className="btn btn-default btn-xs tag">{tag}</a>
+        );
+      }
       flipcards.push(
-          <FlipCard key={card.id}
-                    disabled={true}
-                    flipped={this.state.flippedById[card.id]}
-                    onDoubleClick={this.toggle.bind(this, card.id)}
-                    bootstrap={true} >
+        <FlipCard key={card.id}
+                  disabled={true}
+                  flipped={this.state.flippedById[card.id]}
+                  onDoubleClick={this.toggle.bind(this, card.id)}
+                  bootstrap={true} >
+          <div>
+            <div className="edit-controls">
+              <a href="#" className="left" onClick={this.deleteCard.bind(this, card.id)}><i className="fa fa-trash-o"></i></a>
+              <a href="#" className="right" onClick={this.editCard.bind(this, card.id)}><i className="fa fa-pencil"></i></a>
+            </div>
             <div>
-              <div className="edit-controls">
-                <a href="#" className="left" onClick={this.deleteCard.bind(this, card.id)}><i className="fa fa-trash-o"></i></a>
-                <a href="#" className="right" onClick={this.editCard.bind(this, card.id)}><i className="fa fa-pencil"></i></a>
-              </div>
-              <p>{card.front}</p></div>
-            <div><p>{card.back}</p></div>
-          </FlipCard>
+              <p>{card.front}</p>
+            </div>
+            <div>{tags}</div>
+          </div>
+
+          <div>
+            <div className="panel-heading">Panel heading without title</div>
+            <p>{card.back}</p>
+          </div>
+        </FlipCard>
       );
     }
     return (

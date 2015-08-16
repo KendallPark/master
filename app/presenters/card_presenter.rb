@@ -9,6 +9,7 @@ class CardPresenter < BasePresenter
       easiness_factor: card.easiness_factor,
       number_repetitions: card.number_repetitions,
       quality_of_last_recall: card.quality_of_last_recall,
+      tags: card.tag_list,
     }
   end
 end

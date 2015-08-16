@@ -169,6 +169,7 @@ var FlipCard = React.createClass({
             className: (0, classSet)({
               'ReactFlipCard__Front': true,
               'panel': this.props.bootstrap,
+              'panel-primary': this.props.bootstrap,
             }),
             tabIndex: 0,
             ref: 'front',
@@ -183,6 +184,7 @@ var FlipCard = React.createClass({
             className: (0, classSet)({
               'ReactFlipCard__Back': true,
               'panel': this.props.bootstrap,
+              'panel-primary': this.props.bootstrap,
             }),
             ref: 'back',
             tabIndex: -1,
