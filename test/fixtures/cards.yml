@@ -9,5 +9,17 @@ one:
   card_content: hello
   next_repetition: <%= Date.today %>
 
-# two: {}
-#  column: value
+brett_one:
+  user: brett
+  card_content: howdy
+  next_repetition: <%= Date.today %>
+
+brett_remix:
+  user: brett
+  card_content: hello
+  next_repetition: <%= Date.today %>
+
+kendall_remix:
+  user: kendall
+  card_content: brett_howdy
+  next_repetition: <%= Date.today %>
