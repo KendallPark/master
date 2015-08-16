@@ -140,3 +140,12 @@ class CardManager extends React.Component {
     );
   }
 }
+
+class SampleDisplay extends BaseDisplayObject{
+
+  render() {
+    //IMPORTANT: Without the style, nothing happens :(
+    var itemStyle = super.getStyle.call(this);
+    return <div style={itemStyle}></div>;
+  }
+}
