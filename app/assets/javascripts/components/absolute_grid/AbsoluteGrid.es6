@@ -37,7 +37,9 @@ class AbsoluteGrid extends React.Component {
       This also clears out filtered items from the sort order and
       eliminates gaps and duplicate sorts
     */
-    _.sortBy(this.props.items, this.props.sortProp).forEach(function(item){
+    var sorted = _.sortBy(this.props.items, this.props.sortProp);
+    if (this.props.reverseOrder) { sorted = sorted.reverse(); }
+    sorted.forEach(function(item){
       if(!item[this.props.filterProp]){
         var key = item[this.props.keyProp];
         sortedIndex[key] = filteredIndex;
