@@ -1,12 +1,12 @@
 <div id="home">
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
-      <button type="button" class="btn btn-primary btn-main-nav">Train</button>
+      <%= link_to "Train", train_path, class: "btn btn-primary btn-main-nav" %>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
-      <button type="button" class="btn btn-primary btn-main-nav">Manage</button>
+      <%= link_to "Manage", user_cards_path(username: current_user.username), class: "btn btn-primary btn-main-nav" %>
     </div>
   </div>
 </div>
