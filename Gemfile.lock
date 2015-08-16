@@ -241,7 +241,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
-    tworgy-spaced-repetition (0.3.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.1)
@@ -298,7 +297,6 @@ DEPENDENCIES
   sprockets (~> 3.0)
   sprockets-es6
   therubyracer
-  tworgy-spaced-repetition
   uglifier (>= 1.3.0)
   unicorn
   webmock

@@ -45,8 +45,6 @@ gem 'font-awesome-sass', '~> 4.3.0'
 
 gem 'acts-as-taggable-on', '~> 3.4'
 
-gem 'tworgy-spaced-repetition'
-
 gem 'rails-api'
 
 source 'https://rails-assets.org' do
