@@ -9,6 +9,16 @@ one:
   card_content: hello
   next_repetition: <%= Date.today %>
 
+two:
+  user: kendall
+  card_content: brett_howdy
+  next_repetition: <%= Date.yesterday %>
+
+three:
+  user: kendall
+  card_content: brett_howdy
+  next_repetition: <%= Date.tomorrow %>
+
 brett_one:
   user: brett
   card_content: howdy

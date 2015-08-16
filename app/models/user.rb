@@ -18,6 +18,14 @@ class User < ActiveRecord::Base
     username
   end
 
+  def next_cards
+    cards.where(cards.arel_table[:next_repetition].lteq(Date.today))
+  end
+
+  def next_card
+    next_cards.sample
+  end
+
 private
   def mizzou_med_students_only
     if /@health.missouri.edu$/.match(email).nil?
