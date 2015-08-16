@@ -43,6 +43,10 @@ gem 'bootstrap-sass'
 gem 'bootswatch-rails'
 gem 'font-awesome-sass', '~> 4.3.0'
 
+gem 'acts-as-taggable-on', '~> 3.4'
+
+gem 'tworgy-spaced-repetition'
+
 source 'https://rails-assets.org' do
   # gem 'rails-assets-reactable' # currently using 0.11 beta
   # gem 'rails-assets-classnames'
@@ -58,7 +62,7 @@ group :test do
   gem "rr"
   gem "minitest-reporters"
   gem 'factory_girl_rails'
-  gem 'faker'
+  # gem 'faker'
 end
 
 group :development do

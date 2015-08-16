@@ -37,6 +37,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (3.5.0)
+      activerecord (>= 3.2, < 5)
     addressable (2.3.8)
     ansi (1.5.0)
     arel (6.0.3)
@@ -96,8 +98,6 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    faker (1.4.3)
-      i18n (~> 0.5)
     font-awesome-sass (4.3.2.1)
       sass (~> 3.2)
     globalid (0.3.6)
@@ -233,6 +233,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
+    tworgy-spaced-repetition (0.3.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.1)
@@ -254,6 +255,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 3.4)
   bootstrap-sass
   bootswatch-rails
   cancan
@@ -262,7 +264,6 @@ DEPENDENCIES
   devise
   factory-helper
   factory_girl_rails
-  faker
   font-awesome-sass (~> 4.3.0)
   jbuilder (~> 2.0)
   jquery-rails
@@ -285,6 +286,7 @@ DEPENDENCIES
   sprockets (~> 3.0)
   sprockets-es6
   therubyracer
+  tworgy-spaced-repetition
   uglifier (>= 1.3.0)
   unicorn
   webmock
