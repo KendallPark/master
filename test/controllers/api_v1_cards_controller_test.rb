@@ -3,7 +3,7 @@ require 'test_helper'
 class Api::V1::CardsControllerTest < ControllerTestCase
   should "get an index" do
     get :index
-    assert_equal @user.cards.to_json, response.body
+    assert_equal CardPresenter.present(@user.cards).to_json, response.body
   end
 
   context "when creating a card" do
@@ -23,7 +23,7 @@ class Api::V1::CardsControllerTest < ControllerTestCase
 
     should "return the card as json" do
       post :create, { card: @card_params }
-      assert_equal Card.last.to_json, response.body
+      assert_equal CardPresenter.present(Card.last).to_json, response.body
     end
 
     should "also create a card content" do

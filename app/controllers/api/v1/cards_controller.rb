@@ -1,7 +1,7 @@
 class Api::V1::CardsController < Api::V1::BaseController
   def index
     @cards = current_user.cards
-    render json: @cards
+    render json: CardPresenter.present(@cards)
   end
 
   def create
@@ -11,7 +11,7 @@ class Api::V1::CardsController < Api::V1::BaseController
       content = current_user.card_contents.create!(card_params.slice(:front, :back))
     end
     @card = current_user.cards.create!(card_content_id: content[:id], tag_list: card_params[:tag_list])
-    render json: @card
+    render json: CardPresenter.present(@card)
   end
 
   def update
@@ -28,7 +28,7 @@ class Api::V1::CardsController < Api::V1::BaseController
       @card.tag_list = card_params[:tag_list]
     end
     @card.save!
-    render json: @card
+    render json: CardPresenter.present(@card)
   end
 
 private
