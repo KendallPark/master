@@ -50,6 +50,9 @@ gem 'tworgy-spaced-repetition'
 gem 'rails-api'
 
 source 'https://rails-assets.org' do
+  gem 'rails-assets-classnames'
+  gem 'rails-assets-react-input-autosize'
+  gem 'rails-assets-react-select'
   # gem 'rails-assets-reactable' # currently using 0.11 beta
   # gem 'rails-assets-classnames'
   # gem 'rails-assets-moment'

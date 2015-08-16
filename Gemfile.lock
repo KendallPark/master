@@ -168,6 +168,11 @@ GEM
     rails-api (0.4.0)
       actionpack (>= 3.2.11)
       railties (>= 3.2.11)
+    rails-assets-classnames (1.2.2)
+    rails-assets-react-input-autosize (0.4.5)
+    rails-assets-react-select (0.6.2)
+      rails-assets-classnames (>= 1.2.2, < 2)
+      rails-assets-react-input-autosize (>= 0.4.3, < 0.5)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.6)
@@ -280,6 +285,9 @@ DEPENDENCIES
   pry-stack_explorer
   rails (= 4.2.2)
   rails-api
+  rails-assets-classnames!
+  rails-assets-react-input-autosize!
+  rails-assets-react-select!
   react-bootstrap-rails
   react-rails (~> 1.0)
   rr
