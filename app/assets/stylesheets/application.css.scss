@@ -21,8 +21,10 @@ body { padding-top: 60px; }
 @import "base";
 @import "home";
 @import "devise";
+@import "flipcard_animations";
 @import "flipcard";
 @import "manager";
+@import "trainer";
 
 @import "font-awesome-sprockets";
 @import "font-awesome";
