@@ -108,14 +108,14 @@ class CardManager extends React.Component {
   render() {
     var modalInstance;
     if (this.state.edit === null) {
-      modalInstance = (<NewCard key="new_card"
+      modalInstance = (<CardEditor key="new_card"
                                 mode="new"
                                 onSave={this.save.bind(this)}
                                 onClose={this.close.bind(this)}
                                 show={this.state.showModal}
                                 defaultTags={this.state.newCardTags} />);
     } else {
-      modalInstance = (<NewCard key="edit_card"
+      modalInstance = (<CardEditor key="edit_card"
                                 mode="edit"
                                 onSave={this.update.bind(this)}
                                 onClose={this.close.bind(this)}

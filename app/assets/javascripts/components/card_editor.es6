@@ -2,7 +2,7 @@ var Modal = ReactBootstrap.Modal;
 var Button = ReactBootstrap.Button;
 var Input = ReactBootstrap.Input;
 
-class NewCard extends React.Component {
+class CardEditor extends React.Component {
 
   constructor(props) {
     super(props);
@@ -70,7 +70,7 @@ class NewCard extends React.Component {
   }
 }
 
-NewCard.propTypes = {
+CardEditor.propTypes = {
   mode: React.PropTypes.string,
   onSave: React.PropTypes.func,
   onClose: React.PropTypes.func,
@@ -79,7 +79,7 @@ NewCard.propTypes = {
   defaultTags: React.PropTypes.array,
 };
 
-NewCard.defaultProps = {
+CardEditor.defaultProps = {
   mode: "new",
   show: false,
   card: {
