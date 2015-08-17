@@ -14,11 +14,6 @@ class CardManager extends React.Component {
       showModal: false,
       newCardTags: [],
       items: items,
-      new: {
-        front: "",
-        back: "",
-        tags: [],
-      },
       edit: null,
     };
   }
@@ -35,7 +30,7 @@ class CardManager extends React.Component {
   }
 
   close() {
-    this.setState( { showModal: false, edit: null, editCardTags: null });
+    this.setState( { showModal: false, edit: null });
   }
 
   onFilter(e) {
