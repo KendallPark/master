@@ -5,17 +5,14 @@ var Input = ReactBootstrap.Input;
 class CardManager extends React.Component {
   constructor(props) {
     super(props);
-    var flippedById = _.mapValues(_.indexBy(this.props.cards, 'id'), d => false);
     var items = _.map(this.props.cards, (card, i) => ({ card: card,
                                                         key: card.id,
                                                         flipped: false,
                                                         originalIndex: i,
                                                         filtered: false }) );
     this.state = {
-      flippedById: flippedById,
       showModal: false,
-      newCardTags: "",
-      editCardTags: null,
+      newCardTags: [],
       items: items,
       new: {
         front: "",
@@ -52,10 +49,7 @@ class CardManager extends React.Component {
     this.setState( { items: newItems });
   }
 
-  save() {
-    var front = this.refs.front.getValue()
-    var back = this.refs.back.getValue()
-    var tags = this.state.newCardTags.split(",")
+  save(front, back, tags) {
     $.ajax({
       type: "POST",
       url: `/api/v1/cards`,
@@ -72,7 +66,7 @@ class CardManager extends React.Component {
                             flipped: false,
                             originalIndex: this.state.items.length,
                             filtered: false });
-        this.setState({items: newCardsArray});
+        this.setState({items: newCardsArray, newCardTags: card.tags});
         this.close();
       }.bind(this),
       failure: function(error) {
@@ -81,10 +75,7 @@ class CardManager extends React.Component {
     });
   }
 
-  update() {
-    var front = this.refs.front.getValue()
-    var back = this.refs.back.getValue()
-    var tags = this.state.editCardTags.split(",")
+  update(front, back, tags) {
     $.ajax({
       type: "PATCH",
       url: `/api/v1/cards/${this.state.edit.id}`,
@@ -106,14 +97,6 @@ class CardManager extends React.Component {
     });
   }
 
-  onTagInputChange(tags) {
-    this.setState( { newCardTags: tags } );
-  }
-
-  onEditTagInputChange(tags) {
-    this.setState( { editCardTags: tags } );
-  }
-
   editCard(card) {
     this.setState({ edit: card, showModal: true, editCardTags: card.tags.toString()  });
   }
@@ -122,74 +105,22 @@ class CardManager extends React.Component {
     console.log("delete");
   }
 
-  getNewCardModal() {
-    return (
-      <Modal id="new_card_modal" show={this.state.showModal} onHide={this.close.bind(this)}>
-        <Modal.Header closeButton>
-          <Modal.Title>New Card</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input ref="front" type='textarea' label='Front' placeholder='' />
-        </Modal.Body>
-        <Modal.Body>
-          <Input ref="back" type='textarea' label='Back' placeholder='' />
-        </Modal.Body>
-        <Modal.Footer>
-          <div className="modal-footer-content row">
-            <Select
-              ref="tags"
-              className="col-xs-10"
-              value={this.state.newCardTags}
-              delimiter=","
-              multi={true}
-              allowCreate={true}
-              placeholder="tags"
-              options={[]}
-              onChange={this.onTagInputChange.bind(this)} />
-            <Button className="col-xs-2" onClick={this.save.bind(this)}>Add Card</Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
-
-  getEditCardModal() {
-    return (
-      <Modal id="edit_card_modal" show={this.state.showModal} onHide={this.close.bind(this)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Card</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input ref="front" type='textarea' label='Front' placeholder='' defaultValue={this.state.edit.front} />
-        </Modal.Body>
-        <Modal.Body>
-          <Input ref="back" type='textarea' label='Back' placeholder='' defaultValue={this.state.edit.back} />
-        </Modal.Body>
-        <Modal.Footer>
-          <div className="modal-footer-content row">
-            <Select
-              ref="tags"
-              className="col-xs-10"
-              value={this.state.editCardTags}
-              delimiter=","
-              multi={true}
-              allowCreate={true}
-              placeholder="tags"
-              options={[]}
-              onChange={this.onEditTagInputChange.bind(this)} />
-            <Button className="col-xs-2" onClick={this.update.bind(this)}>Update</Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
-
   render() {
     var modalInstance;
     if (this.state.edit === null) {
-      modalInstance = this.getNewCardModal();
+      modalInstance = (<NewCard key="new_card"
+                                mode="new"
+                                onSave={this.save.bind(this)}
+                                onClose={this.close.bind(this)}
+                                show={this.state.showModal}
+                                defaultTags={this.state.newCardTags} />);
     } else {
-      modalInstance = this.getEditCardModal();
+      modalInstance = (<NewCard key="edit_card"
+                                mode="edit"
+                                onSave={this.update.bind(this)}
+                                onClose={this.close.bind(this)}
+                                show={this.state.showModal}
+                                card={this.state.edit} />);
     }
     var flipCardDisplay = (
       <FlipCardDisplay  onDoubleClick={this.flip.bind(this)}
@@ -223,45 +154,6 @@ class CardManager extends React.Component {
                         responsive={true} />
         </div>
       </div>
-    );
-  }
-}
-
-class FlipCardDisplay extends BaseDisplayObject{
-
-  render() {
-    //IMPORTANT: Without the style, nothing happens :(
-    var itemStyle = super.getStyle.call(this);
-
-    var card = this.props.item.card;
-
-    var tags = [];
-    for (var tag of card.tags) {
-      tags.push(
-        <a href="#" className="tag" key={tag}><span className="label label-default">{tag}</span></a>
-      );
-    }
-    return (
-      <FlipCard style={itemStyle}
-                disabled={true}
-                flipped={this.props.item.flipped}
-                onDoubleClick={this.props.onDoubleClick.bind(this, this.props.item.flipped, this.props.item.originalIndex)}
-                bootstrap={true} >
-        <div>
-          <div className="edit-controls">
-            <a href="#" className="left" onClick={this.props.onDelete.bind(this, card)}><i className="fa fa-trash-o"></i></a>
-            <a href="#" className="right" onClick={this.props.onEdit.bind(this, card)}><i className="fa fa-pencil"></i></a>
-          </div>
-          <div className="card-content vh-center">
-            <p>{card.front}</p>
-          </div>
-          <div className="tags-bottom">{tags}</div>
-        </div>
-
-        <div className="card-content vh-center">
-          <p>{card.back}</p>
-        </div>
-      </FlipCard>
     );
   }
 }
