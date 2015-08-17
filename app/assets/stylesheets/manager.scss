@@ -1,5 +1,3 @@
-@import "bootswatch/paper/variables";
-
 #manager {
   .ReactFlipCard {
     // margin: 25px;
@@ -100,20 +98,6 @@
     }
   }
 
-  #new_card_modal, #edit_card_modal {
-    textarea {
-      height: 100px;
-    }
-  }
-
-  .modal-footer {
-    text-align: left;
-  }
-
-  .modal-footer-content {
-    width: 570px;
-  }
-
   #new_card_button {
     display: block;
     width: 100%;
@@ -125,5 +109,24 @@
 
   #manager_body {
 
+  }
+}
+
+#new_card_modal, #edit_card_modal {
+  textarea {
+    height: 100px;
+  }
+
+  .modal-footer {
+    text-align: left;
+  }
+
+  .modal-footer-content {
+    width: 570px;
+    margin-right: 10px;
+
+    button {
+      float: right;
+    }
   }
 }

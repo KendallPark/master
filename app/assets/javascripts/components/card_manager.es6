@@ -170,7 +170,7 @@ class CardManager extends React.Component {
             <Select
               ref="tags"
               className="col-xs-10"
-              value={this.state.editCardTags  }
+              value={this.state.editCardTags}
               delimiter=","
               multi={true}
               allowCreate={true}
