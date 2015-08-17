@@ -145,7 +145,7 @@ class CardManager extends React.Component {
               allowCreate={true}
               placeholder="tags"
               options={[]}
-              onChange={this.onEditTagInputChange.bind(this)} />
+              onChange={this.onTagInputChange.bind(this)} />
             <Button className="col-xs-2" onClick={this.save.bind(this)}>Add Card</Button>
           </div>
         </Modal.Footer>
