@@ -44,6 +44,25 @@ class Api::V1::CardsControllerTest < ControllerTestCase
       assert_equal @card_params[:tag_list], Card.last.tag_list
     end
 
+    context "with a photograph" do
+      setup do
+        @front_image = Rails.root.join('test', 'files', 'balloonsnake.jpg')
+        @front_file = Rack::Test::UploadedFile.new(@front_image, "image/jpeg")
+        @back_image = Rails.root.join('test', 'files', 'superheroes.jpg')
+        @back_file = Rack::Test::UploadedFile.new(@back_image, "image/jpeg")
+      end
+
+      should "upload the front image" do
+        post :create, card: @card_params.merge(front_image: @front_file)
+        assert Card.last.content.front_image.url
+      end
+
+      should "upload the back image" do
+        post :create, card: @card_params.merge(back_image: @back_file)
+        assert Card.last.content.back_image.url
+      end
+    end
+
     context "with someone else's content" do
       setup do
         @content = card_contents(:brett_howdy)
@@ -82,7 +101,7 @@ class Api::V1::CardsControllerTest < ControllerTestCase
       assert_equal @card_params[:back], @card.back
     end
 
-    should "udpate tags" do
+    should "update tags" do
       patch :update, { id: @card.id, card: @card_params }
       @card.reload
       assert_equal @card_params[:tag_list], @card.tag_list
@@ -108,6 +127,20 @@ class Api::V1::CardsControllerTest < ControllerTestCase
       patch :update, { id: @card.id, card: card_params }
       @card.reload
       assert_equal original_tags, @card.tag_list
+    end
+
+    should "update a photo" do
+      @front_image = Rails.root.join('test', 'files', 'balloonsnake.jpg')
+      @front_file = Rack::Test::UploadedFile.new(@front_image, "image/jpeg")
+      @back_image = Rails.root.join('test', 'files', 'superheroes.jpg')
+      @back_file = Rack::Test::UploadedFile.new(@back_image, "image/jpeg")
+      card_params = {
+        front_image: @front_file,
+        back_image: @back_file
+      }
+      patch :update, { id: @card.id, card: card_params }
+      assert Card.last.content.back_image.url
+      assert Card.last.content.front_image.url
     end
 
     context "with someone else's content" do

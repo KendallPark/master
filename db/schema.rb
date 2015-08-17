@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150816203607) do
+ActiveRecord::Schema.define(version: 20150817182936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,8 +20,16 @@ ActiveRecord::Schema.define(version: 20150816203607) do
     t.integer  "user_id"
     t.text     "front"
     t.text     "back"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "front_image_file_name"
+    t.string   "front_image_content_type"
+    t.integer  "front_image_file_size"
+    t.datetime "front_image_updated_at"
+    t.string   "back_image_file_name"
+    t.string   "back_image_content_type"
+    t.integer  "back_image_file_size"
+    t.datetime "back_image_updated_at"
   end
 
   create_table "cards", force: :cascade do |t|

@@ -47,6 +47,10 @@ gem 'acts-as-taggable-on', '~> 3.4'
 
 gem 'rails-api'
 
+# images
+gem 'paperclip'
+gem 'aws-sdk'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-react-input-autosize'
