@@ -20,7 +20,7 @@ class FlipCardDisplay extends BaseDisplayObject{
                 bootstrap={true} >
         <div>
           <div className="edit-controls">
-            <a href="#" className="left" onClick={this.props.onDelete.bind(this, card)}><i className="fa fa-trash-o"></i></a>
+            <a href="#" className="left" onClick={this.props.onDelete.bind(this, card.id)}><i className="fa fa-trash-o"></i></a>
             <a href="#" className="right" onClick={this.props.onEdit.bind(this, card)}><i className="fa fa-pencil"></i></a>
           </div>
           <div className="card-content vh-center">
