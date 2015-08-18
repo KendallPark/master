@@ -19,12 +19,17 @@ class CardEditor extends React.Component {
   onSave() {
     var front = this.refs.front.getValue();
     var back = this.refs.back.getValue();
-    var tags = this.state.tags.split(",");
+    var tags = this.state.tags;
     this.props.onSave(front, back, tags);
   }
 
   onTagChange(tags) {
-    this.setState( { tags: tags } );
+    var newTags = tags.split(",");
+    console.log(newTags);
+    if(newTags.length === 1 && newTags[0] === "") {
+      newTags = [];
+    }
+    this.setState( { tags: newTags } );
   }
 
   render() {
