@@ -96,8 +96,20 @@ class CardManager extends React.Component {
     this.setState({ edit: card, showModal: true, editCardTags: card.tags.toString()  });
   }
 
-  deleteCard() {
-    console.log("delete");
+  deleteCard(cardId) {
+    $.ajax({
+      type: "DELETE",
+      url: `/api/v1/cards/${cardId}`,
+      success: function() {
+        var index = _.findIndex(this.state.items, { key: cardId });
+        var newState = React.addons.update(this.state.items, { $splice: [[index, 1]] });
+        this.setState({items: newState});
+        this.close();
+      }.bind(this),
+      failure: function(error) {
+        console.log(error);
+      }
+    });
   }
 
   render() {
