@@ -13,3 +13,8 @@ brett_howdy:
   user: brett
   front: Yo
   back: bro
+
+only_one_content:
+  user: kendall
+  front: yup
+  back: yip

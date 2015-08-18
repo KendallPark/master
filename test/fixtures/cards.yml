@@ -33,3 +33,8 @@ kendall_remix:
   user: kendall
   card_content: brett_howdy
   next_repetition: <%= Date.today %>
+
+only_one_card:
+  user: kendall
+  card_content: only_one_content
+  next_repetition: <%= Date.today %>

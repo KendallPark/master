@@ -31,6 +31,12 @@ class Api::V1::CardsController < Api::V1::BaseController
     render json: CardPresenter.present(@card)
   end
 
+  def destroy
+    card = current_user.cards.find(params[:id])
+    card.destroy
+    render nothing: true, status: :ok
+  end
+
 private
 
   def card_params

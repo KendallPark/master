@@ -6,6 +6,14 @@ class Api::V1::CardsControllerTest < ControllerTestCase
     assert_equal CardPresenter.present(@user.cards).to_json, response.body
   end
 
+  context "when deleting a card" do
+    should "return a successful status" do
+      card = cards(:only_one_card)
+      delete :destroy, id: card.id
+      assert_equal response.status, 200
+    end
+  end
+
   context "when creating a card" do
     setup do
       @card_params = {
