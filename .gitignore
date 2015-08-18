@@ -36,3 +36,6 @@ bower.json
 
 # secrets
 .secrets/*
+
+# Ignore application configuration
+/config/application.yml
