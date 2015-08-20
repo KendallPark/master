@@ -2,6 +2,7 @@ class Card < ActiveRecord::Base
   include SuperMemo::SM2
   belongs_to :user
   belongs_to :card_content
+  default_scope  { order(:created_at => :desc) }
   validates_presence_of :user, :card_content, :next_repetition
   before_validation :set_initial_next_repetition, on: :create
   acts_as_ordered_taggable
