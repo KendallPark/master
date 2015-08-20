@@ -2,13 +2,12 @@ class FlipCardDisplay extends BaseDisplayObject{
 
   generateCardContent(text, imageUrl) {
     var content;
-    console.log(text, imageUrl);
     if(imageUrl && text) {
       content = ( <div className="fix">
-                    <img src={imageUrl} />
                     <div className="desc">
                       <p className="desc-content">{text}</p>
                     </div>
+                    <img src={imageUrl} />
                   </div>);
     } else if (imageUrl && !text) {
       content = <img src={imageUrl} />;
