@@ -1,6 +1,3 @@
-//= require react
-//= require autosize
-
 const UPDATE = 'autosize:update',
   DESTROY = 'autosize:destroy',
   RESIZED = 'autosize:resized';
