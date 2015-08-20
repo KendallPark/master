@@ -14,6 +14,12 @@ class Api::V1::CardsController < Api::V1::BaseController
     render json: CardPresenter.present(@card)
   end
 
+  def blank
+    content = current_user.card_contents.create!
+    card = current_user.cards.create!(card_content_id: content[:id])
+    render json: CardPresenter.present(card)
+  end
+
   def update
     @card = current_user.cards.find(params[:id])
     # important because cards can point to other user's content

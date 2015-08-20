@@ -14,6 +14,15 @@ class Api::V1::CardsControllerTest < ControllerTestCase
     end
   end
 
+  context "when getting a blank card" do
+    should "return a blank card" do
+      get :blank
+      assert_equal Card.last.id, JSON.parse(response.body)["id"]
+      assert_nil JSON.parse(response.body)["front"]
+      assert_nil JSON.parse(response.body)["back"]
+    end
+  end
+
   context "when creating a card" do
     setup do
       @card_params = {
