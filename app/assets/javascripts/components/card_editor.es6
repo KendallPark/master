@@ -42,9 +42,6 @@ class CardEditor extends React.Component {
     this.setState( { tags: newTags } );
   }
 
-  dropImage() {
-    console.log("image drop");
-  }
 
   addFrontImage(image) {
     this.setState({frontImage: image[0], frontImageUrl: image[0].preview});
@@ -64,6 +61,17 @@ class CardEditor extends React.Component {
                     </Dropzone>);
     }
     return container;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.mode == "new") {
+      this.setState({
+        frontImage: null,
+        backImage: null,
+        frontImageUrl: null,
+        backImageUrl: null,
+      });
+    }
   }
 
   render() {
