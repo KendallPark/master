@@ -109,8 +109,11 @@
 
 #new_card_modal, #edit_card_modal {
   textarea {
+    margin-top: 20px;
     height: 100px;
     line-height: 22px;
+    width: 100%;
+    font-size: 20px;
   }
 
   img {
@@ -119,6 +122,11 @@
 
   .modal-footer {
     text-align: left;
+  }
+
+  .modal-body {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .modal-footer-content {
@@ -135,6 +143,7 @@
     text-align: center;
     border-color: #ccc;
     color: #ccc;
+    padding: 10px;
     // background-color: #efefef;
     border-style: dashed;
   }

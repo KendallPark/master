@@ -55,11 +55,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-react-input-autosize'
   gem 'rails-assets-react-select'
-  gem 'rails-assets-dropzone'
-  # gem 'rails-assets-reactable' # currently using 0.11 beta
-  # gem 'rails-assets-classnames'
-  # gem 'rails-assets-moment'
-  # gem 'rails-assets-react-bootstrap-datetimepicker'
+  gem 'rails-assets-autosize'
 end
 
 group :test do

@@ -19,8 +19,8 @@ class CardEditor extends React.Component {
   }
 
   onSave() {
-    var front = this.refs.front.getValue();
-    var back = this.refs.back.getValue();
+    var front = this.refs.front.getDOMNode().value;
+    var back = this.refs.back.getDOMNode().value;
     var tags = this.state.tags;
     var frontImage = this.state.frontImage;
     var backImage = this.state.backImage;
@@ -82,12 +82,12 @@ class CardEditor extends React.Component {
         <Modal.Body>
           <h5>Front</h5>
           {frontImageContainer}
-          <Input autoFocus={true} ref="front" type='textarea' placeholder='' defaultValue={this.props.card.front} />
+          <TextareaAutosize ref="front" autoFocus={true} placeholder="front text goes here" defaultValue={this.props.card.front}/>
         </Modal.Body>
         <Modal.Body>
           <h5>Back</h5>
           {backImageContainer}
-          <Input ref="back" type='textarea' placeholder='' defaultValue={this.props.card.back} />
+          <TextareaAutosize ref="back" placeholder="back text goes here" defaultValue={this.props.card.back}/>
         </Modal.Body>
         <Modal.Footer>
           <div className="modal-footer-content row">

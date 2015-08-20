@@ -20,5 +20,6 @@
 //= require react-input-autosize
 //= require react-select
 //= require lodash
+//= require autosize
 //= require components
 //= require_tree .

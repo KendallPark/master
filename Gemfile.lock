@@ -186,8 +186,8 @@ GEM
     rails-api (0.4.0)
       actionpack (>= 3.2.11)
       railties (>= 3.2.11)
+    rails-assets-autosize (3.0.8)
     rails-assets-classnames (1.2.2)
-    rails-assets-dropzone (4.0.1)
     rails-assets-react-input-autosize (0.4.5)
     rails-assets-react-select (0.6.2)
       rails-assets-classnames (>= 1.2.2, < 2)
@@ -311,8 +311,8 @@ DEPENDENCIES
   pry-stack_explorer
   rails (= 4.2.2)
   rails-api
+  rails-assets-autosize!
   rails-assets-classnames!
-  rails-assets-dropzone!
   rails-assets-react-input-autosize!
   rails-assets-react-select!
   rails_12factor
