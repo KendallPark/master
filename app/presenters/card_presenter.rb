@@ -10,6 +10,10 @@ class CardPresenter < BasePresenter
       number_repetitions: card.number_repetitions,
       quality_of_last_recall: card.quality_of_last_recall,
       tags: card.tag_list,
+      front_image_thumb_url: card.content.front_image.present? ? card.content.front_image.url(:thumb) : nil,
+      back_image_thumb_url: card.content.back_image.present? ? card.content.back_image.url(:thumb) : nil,
+      front_image_url: card.content.front_image.present? ? card.content.back_image.url(:medium) : nil,
+      back_image_url: card.content.back_image.present? ? card.content.back_image.url(:medium) : nil,
     }
   end
 end
