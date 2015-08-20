@@ -10,10 +10,17 @@ class CardEditor extends React.Component {
     if(this.props.mode === 'edit') {
       tags = this.props.card.tags;
     }
+    var fiu, biu;
+    if(this.props.card) {
+      fiu = this.props.card.front_image_url;
+      biu = this.props.card.back_image_url;
+    }
     this.state = {
       tags: tags,
       frontImage: null,
       backImage: null,
+      frontImageUrl: fiu,
+      backImageUrl: biu,
     }
 
   }
@@ -40,17 +47,17 @@ class CardEditor extends React.Component {
   }
 
   addFrontImage(image) {
-    this.setState({frontImage: image[0]});
+    this.setState({frontImage: image[0], frontImageUrl: image[0].preview});
   }
 
   addBackImage(image) {
-    this.setState({backImage: image[0]});
+    this.setState({backImage: image[0], backImageUrl: image[0].preview});
   }
 
-  getImageContainer(imageFile, addImageFn) {
+  getImageContainer(imageUrl, addImageFn) {
     var container;
-    if (imageFile) {
-      container = <img src={imageFile.preview}></img>;
+    if (imageUrl) {
+      container = <img src={imageUrl}></img>;
     } else {
       container = ( <Dropzone onDrop={addImageFn.bind(this)}>
                       Drop an image here or click to upload.
@@ -71,8 +78,9 @@ class CardEditor extends React.Component {
       buttonText = "Update";
     }
 
-    var frontImageContainer = this.getImageContainer(this.state.frontImage, this.addFrontImage);
-    var backImageContainer = this.getImageContainer(this.state.backImage, this.addBackImage);
+
+    var frontImageContainer = this.getImageContainer(this.state.frontImageUrl, this.addFrontImage);
+    var backImageContainer = this.getImageContainer(this.state.backImageUrl, this.addBackImage);
 
     return (
       <Modal id={componentId} show={this.props.show} onHide={this.props.onClose}>
