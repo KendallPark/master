@@ -15,6 +15,7 @@ class CardManager extends React.Component {
       newCardTags: [],
       items: items,
       edit: null,
+      blankId: null,
     };
   }
 
@@ -27,10 +28,16 @@ class CardManager extends React.Component {
 
   newCard() {
     this.setState( { showModal: true } );
+    this.getBlank();
   }
 
   close() {
-    this.setState( { showModal: false, edit: null });
+    if(this.state.blankId !== null) {
+      this.setState( { blankId: null });
+      this.deleteCard(this.state.blankId);
+    } else {
+      this.setState( { showModal: false, edit: null, blankId: null});
+    }
   }
 
   onFilter(e) {
@@ -42,6 +49,19 @@ class CardManager extends React.Component {
     });
     var newItems = React.addons.update(this.state.items, toChange);
     this.setState( { items: newItems });
+  }
+
+  getBlank() {
+    $.ajax({
+      type: "GET",
+      url: `/api/v1/card/blank`,
+      success: function(card) {
+        this.setState({blankId: card.id});
+      }.bind(this),
+      failure: function(error) {
+        console.log(error);
+      }
+    });
   }
 
   save(front, back, tags) {
@@ -61,7 +81,7 @@ class CardManager extends React.Component {
                             flipped: false,
                             originalIndex: this.state.items.length,
                             filtered: false });
-        this.setState({items: newCardsArray, newCardTags: card.tags});
+        this.setState({items: newCardsArray, newCardTags: card.tags, blankId: null});
         this.close();
       }.bind(this),
       failure: function(error) {
@@ -102,8 +122,10 @@ class CardManager extends React.Component {
       url: `/api/v1/cards/${cardId}`,
       success: function() {
         var index = _.findIndex(this.state.items, { key: cardId });
-        var newState = React.addons.update(this.state.items, { $splice: [[index, 1]] });
-        this.setState({items: newState});
+        if(index > -1) {
+          var newState = React.addons.update(this.state.items, { $splice: [[index, 1]] });
+          this.setState({items: newState});
+        }
         this.close();
       }.bind(this),
       failure: function(error) {
@@ -115,19 +137,21 @@ class CardManager extends React.Component {
   render() {
     var modalInstance;
     if (this.state.edit === null) {
-      modalInstance = (<CardEditor key="new_card"
-                                mode="new"
-                                onSave={this.save.bind(this)}
-                                onClose={this.close.bind(this)}
-                                show={this.state.showModal}
-                                defaultTags={this.state.newCardTags} />);
+      modalInstance = (<CardEditor  key="new_card"
+                                    mode="new"
+                                    onSave={this.save.bind(this)}
+                                    onClose={this.close.bind(this)}
+                                    show={this.state.showModal}
+                                    defaultTags={this.state.newCardTags}
+                                    cardId={this.state.blankId} />);
     } else {
-      modalInstance = (<CardEditor key="edit_card"
-                                mode="edit"
-                                onSave={this.update.bind(this)}
-                                onClose={this.close.bind(this)}
-                                show={this.state.showModal}
-                                card={this.state.edit} />);
+      modalInstance = (<CardEditor  key="edit_card"
+                                    mode="edit"
+                                    onSave={this.update.bind(this)}
+                                    onClose={this.close.bind(this)}
+                                    show={this.state.showModal}
+                                    card={this.state.edit}
+                                    cardId={this.state.edit.id} />);
     }
     var flipCardDisplay = (
       <FlipCardDisplay  onDoubleClick={this.flip.bind(this)}

@@ -11,6 +11,21 @@
   box-sizing: border-box;
   width: 600px;
   height: (600px * 0.716);
+
+  div.desc{
+    background-color: #000;
+    bottom: 0;
+    color: #fff;
+    left: 0;
+    opacity: 0.5;
+    position: absolute;
+    width: 100%;
+  }
+
+  .fix{
+      width: 100%;
+      padding: 0px;
+  }
 }
 
 .ReactFlipCard__Front,

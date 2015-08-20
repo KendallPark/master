@@ -49,12 +49,13 @@ gem 'rails-api'
 
 # images
 gem 'paperclip'
-gem 'aws-sdk'
+gem 'aws-sdk', '< 2.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-react-input-autosize'
   gem 'rails-assets-react-select'
+  gem 'rails-assets-dropzone'
   # gem 'rails-assets-reactable' # currently using 0.11 beta
   # gem 'rails-assets-classnames'
   # gem 'rails-assets-moment'
@@ -78,6 +79,7 @@ end
 
 group :development do
   gem "letter_opener"
+  gem 'figaro'
 end
 
 group :development, :test do

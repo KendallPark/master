@@ -128,4 +128,12 @@
       float: right;
     }
   }
+
+  .filepicker {
+    min-height: 50px;
+
+    .dz-message {
+      margin: 0;
+    }
+  }
 }
