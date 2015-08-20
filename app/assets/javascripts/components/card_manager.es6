@@ -62,11 +62,11 @@ class CardManager extends React.Component {
       data: formData,
       success: function(card) {
         var newCardsArray = this.state.items.slice();
-        newCardsArray.push({card: card,
-                            key: card.id,
-                            flipped: false,
-                            originalIndex: this.state.items.length,
-                            filtered: false });
+        newCardsArray.unshift({ card: card,
+                                key: card.id,
+                                flipped: false,
+                                originalIndex: this.state.items.length,
+                                filtered: false });
         this.setState({items: newCardsArray, newCardTags: card.tags});
         this.close();
       }.bind(this),
