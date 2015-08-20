@@ -64,16 +64,23 @@ class CardManager extends React.Component {
     });
   }
 
-  save(front, back, tags) {
+  save(front, back, tags, frontImage, backImage) {
+    var formData = new FormData();
+    formData.append("card[front]", front);
+    formData.append("card[back]", back);
+    if(frontImage) {
+      formData.append("card[front_image]", frontImage);
+    }
+    if(backImage){
+      formData.append("card[back_image]", backImage);
+    }
+    formData.append("card[tag_list][]", tags);
     $.ajax({
       type: "POST",
       url: `/api/v1/cards`,
-      data: {
-        card: {
-          front: front,
-          back: back,
-          tag_list: tags }
-      },
+      processData: false,
+      contentType: false,
+      data: formData,
       success: function(card) {
         var newCardsArray = this.state.items.slice();
         newCardsArray.push({card: card,
@@ -90,16 +97,23 @@ class CardManager extends React.Component {
     });
   }
 
-  update(front, back, tags) {
+  update(front, back, tags, frontImage, backImage) {
+    var formData = new FormData();
+    formData.append("card[front]", front);
+    formData.append("card[back]", back);
+    if(frontImage) {
+      formData.append("card[front_image]", frontImage);
+    }
+    if(backImage){
+      formData.append("card[back_image]", backImage);
+    }
+    formData.append("card[tag_list][]", tags);
     $.ajax({
       type: "PATCH",
       url: `/api/v1/cards/${this.state.edit.id}`,
-      data: {
-        card: {
-          front: front,
-          back: back,
-          tag_list: tags }
-      },
+      processData: false,
+      contentType: false,
+      data: formData,
       success: function(card) {
         var item = _.find(this.state.items, { key: card.id });
         item.card = card;

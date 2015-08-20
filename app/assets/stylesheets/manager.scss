@@ -113,6 +113,10 @@
     line-height: 22px;
   }
 
+  img {
+    max-width: 100%;
+  }
+
   .modal-footer {
     text-align: left;
   }
@@ -126,11 +130,12 @@
     }
   }
 
-  .filepicker {
+  .dropzone {
     min-height: 50px;
-
-    .dz-message {
-      margin: 0;
-    }
+    text-align: center;
+    border-color: #ccc;
+    color: #ccc;
+    // background-color: #efefef;
+    border-style: dashed;
   }
 }

@@ -12,8 +12,8 @@ class CardEditor extends React.Component {
     }
     this.state = {
       tags: tags,
-      front_image: null,
-      back_image: null,
+      frontImage: null,
+      backImage: null,
     }
 
   }
@@ -22,7 +22,9 @@ class CardEditor extends React.Component {
     var front = this.refs.front.getValue();
     var back = this.refs.back.getValue();
     var tags = this.state.tags;
-    this.props.onSave(front, back, tags);
+    var frontImage = this.state.frontImage;
+    var backImage = this.state.backImage;
+    this.props.onSave(front, back, tags, frontImage, backImage);
   }
 
   onTagChange(tags) {
@@ -37,71 +39,27 @@ class CardEditor extends React.Component {
     console.log("image drop");
   }
 
-  addFrontImage(image, hey) {
-    console.log("front", image);
+  addFrontImage(image) {
+    this.setState({frontImage: image[0]});
   }
 
   addBackImage(image) {
-    console.log("back", image);
+    this.setState({backImage: image[0]});
   }
 
-  dropzoneInit(dropzone) {
-    // dropzone.options.autoProcessQueue = false;
-    dropzone.options.maxFiles = 1;
-    dropzone.autoDiscover = false;
-    dropzone.options.paramName = "card[front_image]";
-    dropzone.on("processing", () => {
-      dropzone.options.url = `/api/v1/cards/${this.props.cardId}`;
-      dropzone.options.method = "PATCH";
-    });
-  }
-
-  uploadImage() {
-
-  }
-
-  getDropzoneEventHanders(front_or_back) {
-    var imageAdded = front_or_back === "front" ? this.addFrontImage : this.addBackImage;
-    var eventHandlers = {
-      init: this.dropzoneInit.bind(this),
-      // All of these receive the event as first parameter:
-      drop: null,
-      dragstart: null,
-      dragend: null,
-      dragenter: null,
-      dragover: null,
-      dragleave: null,
-      // All of these receive the file as first parameter:
-      addedfile: imageAdded,
-      removedfile: null,
-      thumbnail: null,
-      error: null,
-      processing: null,
-      uploadprogress: null,
-      sending: null,
-      success: null,
-      complete: null,
-      canceled: null,
-      maxfilesreached: null,
-      maxfilesexceeded: null,
-      // All of these receive a list of files as first parameter
-      // and are only called if the uploadMultiple option
-      // in djsConfig is true:
-      processingmultiple: null,
-      sendingmultiple: null,
-      successmultiple: null,
-      completemultiple: null,
-      canceledmultiple: null,
-      // Special Events
-      totaluploadprogress: null,
-      reset: null,
-      queuecompleted: null
-    };
-    return eventHandlers;
+  getImageContainer(imageFile, addImageFn) {
+    var container;
+    if (imageFile) {
+      container = <img src={imageFile.preview}></img>;
+    } else {
+      container = ( <Dropzone onDrop={addImageFn.bind(this)}>
+                      Drop an image here or click to upload.
+                    </Dropzone>);
+    }
+    return container;
   }
 
   render() {
-    console.log("render", this.props.blankId);
     var buttonText, componentId, title;
     if (this.props.mode === 'new') {
       title = "New Card";
@@ -113,18 +71,8 @@ class CardEditor extends React.Component {
       buttonText = "Update";
     }
 
-    var frontDropzoneEventHandlers = this.getDropzoneEventHanders("front");
-    var backDropzoneEventHandlers = this.getDropzoneEventHanders("back");
-
-    var djsConfig = {
-      addRemoveLinks: true,
-    };
-
-    var componentConfig = {
-      allowedFiletypes: ['.jpg', '.png', '.gif'],
-      showFiletypeIcon: true,
-      postUrl: `/api/v1/cards/${this.props.cardId}`
-    };
+    var frontImageContainer = this.getImageContainer(this.state.frontImage, this.addFrontImage);
+    var backImageContainer = this.getImageContainer(this.state.backImage, this.addBackImage);
 
     return (
       <Modal id={componentId} show={this.props.show} onHide={this.props.onClose}>
@@ -132,16 +80,14 @@ class CardEditor extends React.Component {
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <DropzoneComponent  config={componentConfig}
-                              eventHandlers={frontDropzoneEventHandlers}
-                              djsConfig={djsConfig} />
-          <Input ref="front" type='textarea' label='Front' placeholder='' defaultValue={this.props.card.front} />
+          <h5>Front</h5>
+          {frontImageContainer}
+          <Input autoFocus={true} ref="front" type='textarea' placeholder='' defaultValue={this.props.card.front} />
         </Modal.Body>
         <Modal.Body>
-          <DropzoneComponent  config={componentConfig}
-                              eventHandlers={backDropzoneEventHandlers}
-                              djsConfig={djsConfig} />
-          <Input ref="back" type='textarea' label='Back' placeholder='' defaultValue={this.props.card.back} />
+          <h5>Back</h5>
+          {backImageContainer}
+          <Input ref="back" type='textarea' placeholder='' defaultValue={this.props.card.back} />
         </Modal.Body>
         <Modal.Footer>
           <div className="modal-footer-content row">
