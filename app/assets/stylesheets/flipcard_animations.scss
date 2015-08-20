@@ -65,6 +65,13 @@ div.ReactFlipCard__Front:focus, div.ReactFlipCard__Back:focus {
   position: absolute;
   top: 0;
   left: 0;
+
+  div, img, a, i, p {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
 }
 .ReactFlipCard__Front {
   -webkit-transform: rotateY(0deg);
