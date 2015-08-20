@@ -32,6 +32,23 @@ class Trainer extends React.Component {
     });
   }
 
+  generateCardContent(text, imageUrl) {
+    var content;
+    if(imageUrl && text) {
+      content = ( <div className="fix">
+                    <div className="desc">
+                      <p className="desc-content">{text}</p>
+                    </div>
+                    <img src={imageUrl} />
+                  </div>);
+    } else if (imageUrl && !text) {
+      content = <img src={imageUrl} />;
+    } else {
+      content = <p>{text}</p>;
+    }
+    return content;
+  }
+
   render() {
     var card = this.state.card;
 
@@ -50,21 +67,24 @@ class Trainer extends React.Component {
       );
     }
 
+    var hide = this.state.flipped ? "" : " hide";
+
     var buttonToolbar = (
       <div className="btn-batch">
-        <button className="btn btn-info btn-md" onClick={this.score.bind(this, 0)}>WTF?</button>
-        <button className="btn btn-danger btn-md" onClick={this.score.bind(this, 1)}>Uhh...</button>
-        <button className="btn btn-warning btn-md" onClick={this.score.bind(this, 2)}>Damn.</button>
-        <button className="btn btn-default btn-md" onClick={this.score.bind(this, 3)}>Whew!</button>
-          <button className="btn btn-success btn-md" onClick={this.score.bind(this, 4)}>Got it!</button>
-        <button className="btn btn-primary btn-md" onClick={this.score.bind(this, 5)}>Owned it!</button>
+        <button className={"btn btn-info btn-md"+hide} onClick={this.score.bind(this, 0)}>WTF?</button>
+        <button className={"btn btn-danger btn-md"+hide} onClick={this.score.bind(this, 1)}>Uhh...</button>
+        <button className={"btn btn-warning btn-md"+hide} onClick={this.score.bind(this, 2)}>Damn.</button>
+        <button className="btn btn-default btn-lg fa fa-refresh" onClick={this.flip.bind(this)}></button>
+        <button className={"btn btn-success btn-md"+hide} onClick={this.score.bind(this, 3)}>Whew!</button>
+        <button className={"btn btn-primary btn-md"+hide} onClick={this.score.bind(this, 4)}>Got it!</button>
+        <button className={"btn btn-black btn-md"+hide} onClick={this.score.bind(this, 5)}>CAKE</button>
       </div>
     );
 
-    var backContents;
-    if(this.state.flipped) {
-      backContents = card.back;
-    }
+    var backText = this.state.flipped ? card.back : null;
+
+    var frontContent = this.generateCardContent(card.front, card.front_image_url);
+    var backContent = this.generateCardContent(backText, card.back_image_url);
 
     return (
       <div>
@@ -76,24 +96,19 @@ class Trainer extends React.Component {
                       bootstrap={true} >
               <div>
                 <div className="card-content vh-center">
-                  <p>{card.front}</p>
+                  {frontContent}
                 </div>
                 <div className="tags-bottom">{tags}</div>
               </div>
 
               <div>
                 <div className="card-content vh-center">
-                  <p>{backContents}</p>
+                  {backContent}
                 </div>
-                <ButtonToolbar>
-                  {buttonToolbar}
-                </ButtonToolbar>
               </div>
             </FlipCard>
             <ButtonToolbar>
-              <div className="btn-batch">
-                <button className="btn btn-primary btn-lg fa fa-refresh" onClick={this.flip.bind(this)}></button>
-              </div>
+              {buttonToolbar}
               <div className="remainder"><h5>Remaining: {this.state.remaining}</h5></div>
             </ButtonToolbar>
           </div>

@@ -14,6 +14,7 @@
   .btn-toolbar {
     width: 100%;
     text-align: center;
+    margin: 0;
   }
 
   .remainder {
@@ -25,8 +26,20 @@
 
   .btn-batch {
     button {
+      width: 80px;
       float: none;
-      margin-right: 5px;
+      margin-right: 2px;
+      margin-left: 2px;
     }
+  }
+}
+
+.btn-black {
+  color: #fff;
+  background-color: #333;
+
+  &:hover {
+    color: #fff;
+    background-color: #444;
   }
 }
