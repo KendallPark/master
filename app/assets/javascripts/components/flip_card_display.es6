@@ -39,7 +39,7 @@ class FlipCardDisplay extends BaseDisplayObject{
       <FlipCard style={itemStyle}
                 disabled={true}
                 flipped={this.props.item.flipped}
-                onDoubleClick={this.props.onDoubleClick.bind(this, this.props.item.flipped, this.props.item.originalIndex)}
+                onDoubleClick={this.props.onDoubleClick.bind(this, this.props.item.flipped, this.props.index)}
                 bootstrap={true} >
         <div>
           <div className="edit-controls">
