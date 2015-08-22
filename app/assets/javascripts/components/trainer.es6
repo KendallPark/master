@@ -12,6 +12,7 @@ class Trainer extends React.Component {
       remaining: this.props.remaining,
       activeButton: null,
       edit: false,
+      showShortcuts: false,
     };
   }
 
@@ -27,12 +28,16 @@ class Trainer extends React.Component {
       this.score(score);
     } else if(!this.state.edit && this.state.flipped && e.keyCode === 69) {
       this.setState({edit: true});
+    } else if (!this.state.edit && this.state.flipped && e.key === "Shift") {
+      this.setState({showShortcuts: false});
     }
   }
 
   onKeyDown(e) {
     if(!this.state.edit && this.state.flipped && [83, 68, 70, 74, 75, 76].indexOf(e.keyCode) > -1) {
       this.setState({activeButton: [83, 68, 70, 74, 75, 76].indexOf(e.keyCode)});
+    } else if (!this.state.edit && this.state.flipped && e.key === "Shift") {
+      this.setState({showShortcuts: true});
     }
   }
 
@@ -136,13 +141,13 @@ class Trainer extends React.Component {
 
     var buttonToolbar = (
       <div className="btn-batch">
-        <button ref="zero" className={"btn btn-info btn-md"+hide+this.getButtonActiveClass(0)} onClick={this.score.bind(this, 0)} disabled={this.flipped}>WTF?</button>
-        <button ref="one" className={"btn btn-danger btn-md"+hide+this.getButtonActiveClass(1)} onClick={this.score.bind(this, 1)} disabled={this.flipped}>Uhh...</button>
-        <button ref="two" className={"btn btn-warning btn-md"+hide+this.getButtonActiveClass(2)} onClick={this.score.bind(this, 2)} disabled={this.flipped}>Damn.</button>
-        <button ref="flip" className="btn btn-default btn-lg fa fa-refresh" onClick={this.flip.bind(this)} ></button>
-        <button ref="three" className={"btn btn-success btn-md"+hide+this.getButtonActiveClass(3)} onClick={this.score.bind(this, 3)} disabled={this.flipped}>Whew!</button>
-        <button ref="four" className={"btn btn-primary btn-md"+hide+this.getButtonActiveClass(4)} onClick={this.score.bind(this, 4)} disabled={this.flipped}>Got it!</button>
-        <button ref="five" className={"btn btn-black btn-md"+hide+this.getButtonActiveClass(5)} onClick={this.score.bind(this, 5)} disabled={this.flipped}>CAKE</button>
+        <button ref="zero" className={"btn btn-info btn-md"+hide+this.getButtonActiveClass(0)} onClick={this.score.bind(this, 0)} disabled={this.flipped}>{this.state.showShortcuts ? "s" : "WTF?"}</button>
+        <button ref="one" className={"btn btn-danger btn-md"+hide+this.getButtonActiveClass(1)} onClick={this.score.bind(this, 1)} disabled={this.flipped}>{this.state.showShortcuts ? "d" : "Uhh..."}</button>
+        <button ref="two" className={"btn btn-warning btn-md"+hide+this.getButtonActiveClass(2)} onClick={this.score.bind(this, 2)} disabled={this.flipped}>{this.state.showShortcuts ? "f" : "Damn."}</button>
+        <button ref="flip" className="btn btn-default btn-lg fa fa-refresh" onClick={this.flip.bind(this)} >{this.state.showShortcuts ? "Enter" : ""}</button>
+        <button ref="three" className={"btn btn-success btn-md"+hide+this.getButtonActiveClass(3)} onClick={this.score.bind(this, 3)} disabled={this.flipped}>{this.state.showShortcuts ? "j" : "Whew!"}</button>
+        <button ref="four" className={"btn btn-primary btn-md"+hide+this.getButtonActiveClass(4)} onClick={this.score.bind(this, 4)} disabled={this.flipped}>{this.state.showShortcuts ? "k" : "Got it!"}</button>
+        <button ref="five" className={"btn btn-black btn-md"+hide+this.getButtonActiveClass(5)} onClick={this.score.bind(this, 5)} disabled={this.flipped}>{this.state.showShortcuts ? "l" : "CAKE"}</button>
       </div>
     );
 
