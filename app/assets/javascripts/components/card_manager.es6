@@ -148,8 +148,7 @@ class CardManager extends React.Component {
                                     onSave={this.update.bind(this)}
                                     onClose={this.close.bind(this)}
                                     show={this.state.showModal}
-                                    card={this.state.edit}
-                                    cardId={this.state.edit.id} />);
+                                    card={this.state.edit} />);
     }
     var flipCardDisplay = (
       <FlipCardDisplay  onDoubleClick={this.flip.bind(this)}
