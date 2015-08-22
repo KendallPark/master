@@ -2,6 +2,8 @@ var Modal = ReactBootstrap.Modal;
 var Button = ReactBootstrap.Button;
 var ButtonToolbar = ReactBootstrap.ButtonToolbar;
 var Input = ReactBootstrap.Input;
+var Tooltip = ReactBootstrap.Tooltip;
+var OverlayTrigger = ReactBootstrap.OverlayTrigger;
 
 class Trainer extends React.Component {
   constructor(props) {
@@ -137,17 +139,37 @@ class Trainer extends React.Component {
       );
     }
 
-    var hide = this.state.flipped ? "" : " fade";
+    var hide = this.state.flipped ? "" : "";
+
+    var button0tooltip = <Tooltip>complete blackout</Tooltip>;
+    var button1tooltip = <Tooltip>incorrect response but the correct one remembered</Tooltip>;
+    var button2tooltip = <Tooltip>incorrect response but the correct one seemed easy to recall</Tooltip>;
+    var button3tooltip = <Tooltip>correct response recalled with serious difficulty</Tooltip>;
+    var button4tooltip = <Tooltip>correct response after a hesitation</Tooltip>;
+    var button5tooltip = <Tooltip>perfect response</Tooltip>;
+
 
     var buttonToolbar = (
       <div className="btn-batch">
-        <button ref="zero" className={"btn btn-info btn-md"+hide+this.getButtonActiveClass(0)} onClick={this.score.bind(this, 0)} disabled={this.flipped}>{this.state.showShortcuts ? "s" : "WTF?"}</button>
-        <button ref="one" className={"btn btn-danger btn-md"+hide+this.getButtonActiveClass(1)} onClick={this.score.bind(this, 1)} disabled={this.flipped}>{this.state.showShortcuts ? "d" : "Uhh..."}</button>
-        <button ref="two" className={"btn btn-warning btn-md"+hide+this.getButtonActiveClass(2)} onClick={this.score.bind(this, 2)} disabled={this.flipped}>{this.state.showShortcuts ? "f" : "Damn."}</button>
+        <OverlayTrigger placement='bottom' overlay={button0tooltip} delayShow={1500} disable={!this.state.flipped} >
+          <button ref="zero" className={"btn btn-info btn-md"+hide+this.getButtonActiveClass(0)} onClick={this.score.bind(this, 0)} disabled={!this.state.flipped}>{this.state.showShortcuts ? "s" : "WTF?"}</button>
+        </OverlayTrigger>
+        <OverlayTrigger placement='bottom' overlay={button1tooltip} delayShow={1500} disable={!this.state.flipped} >
+          <button ref="one" className={"btn btn-danger btn-md"+hide+this.getButtonActiveClass(1)} onClick={this.score.bind(this, 1)} disabled={!this.state.flipped}>{this.state.showShortcuts ? "d" : "Uhh..."}</button>
+        </OverlayTrigger>
+        <OverlayTrigger placement='bottom' overlay={button2tooltip} delayShow={1500} disable={!this.state.flipped} >
+          <button ref="two" className={"btn btn-warning btn-md"+hide+this.getButtonActiveClass(2)} onClick={this.score.bind(this, 2)} disabled={!this.state.flipped}>{this.state.showShortcuts ? "f" : "Damn."}</button>
+        </OverlayTrigger>
         <button ref="flip" className="btn btn-default btn-lg fa fa-refresh" onClick={this.flip.bind(this)} >{this.state.showShortcuts ? "Enter" : ""}</button>
-        <button ref="three" className={"btn btn-success btn-md"+hide+this.getButtonActiveClass(3)} onClick={this.score.bind(this, 3)} disabled={this.flipped}>{this.state.showShortcuts ? "j" : "Whew!"}</button>
-        <button ref="four" className={"btn btn-primary btn-md"+hide+this.getButtonActiveClass(4)} onClick={this.score.bind(this, 4)} disabled={this.flipped}>{this.state.showShortcuts ? "k" : "Got it!"}</button>
-        <button ref="five" className={"btn btn-black btn-md"+hide+this.getButtonActiveClass(5)} onClick={this.score.bind(this, 5)} disabled={this.flipped}>{this.state.showShortcuts ? "l" : "CAKE"}</button>
+        <OverlayTrigger placement='bottom' overlay={button3tooltip} delayShow={1500} disable={!this.state.flipped} >
+          <button ref="three" className={"btn btn-success btn-md"+hide+this.getButtonActiveClass(3)} onClick={this.score.bind(this, 3)} disabled={!this.state.flipped}>{this.state.showShortcuts ? "j" : "Whew!"}</button>
+        </OverlayTrigger>
+        <OverlayTrigger placement='bottom' overlay={button4tooltip} delayShow={1500} disable={!this.state.flipped} >
+          <button ref="four" className={"btn btn-primary btn-md"+hide+this.getButtonActiveClass(4)} onClick={this.score.bind(this, 4)} disabled={!this.state.flipped}>{this.state.showShortcuts ? "k" : "Got it!"}</button>
+        </OverlayTrigger>
+        <OverlayTrigger placement='bottom' overlay={button5tooltip} delayShow={1500} disable={!this.state.flipped} >
+          <button ref="five" className={"btn btn-black btn-md"+hide+this.getButtonActiveClass(5)} onClick={this.score.bind(this, 5)} disabled={!this.state.flipped}>{this.state.showShortcuts ? "l" : "CAKE"}</button>
+        </OverlayTrigger>
       </div>
     );
 
