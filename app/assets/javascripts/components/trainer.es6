@@ -174,10 +174,10 @@ class Trainer extends React.Component {
                       // onDoubleClick={}
                       bootstrap={true} >
               <div>
+                <div className="tags-top">{tags}</div>
                 <div className="card-content vh-center">
                   <CardContent text={card.front} imageUrl={card.front_image_url} />
                 </div>
-                <div className="tags-bottom">{tags}</div>
               </div>
 
               <div>

@@ -42,38 +42,6 @@
         }
       }
     }
-
-    .tags-bottom {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      font-size: 14px;
-
-      .label {
-        border-color: #aaa;
-        border-style: solid;
-        border-width: 1px;
-      }
-
-      .label-default {
-        color: #aaa;
-        background-color: #fff;
-      }
-
-      a {
-        margin-right: 3px;
-
-        &:hover, &:visited, &:focus, &:active {
-          text-decoration: none;
-        }
-        &:hover {
-          .label-default {
-            background-color: #aaa;
-            color: #fff;
-          }
-        }
-      }
-    }
   }
   .ReactFlipCard__Front {
     .card-content {

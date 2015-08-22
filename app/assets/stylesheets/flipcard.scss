@@ -39,10 +39,18 @@
     height: 100%;
   }
 
+  .tags-top {
+    top: 10px;
+    left: 15px;
+  }
+
   .tags-bottom {
-    position: absolute;
-    bottom: 10px;
+    bottom: 7px;
     left: 10px;
+  }
+
+  .tags-bottom, .tags-top {
+    position: absolute;
     font-size: 14px;
 
     .label {
