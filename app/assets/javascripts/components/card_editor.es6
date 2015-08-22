@@ -31,7 +31,9 @@ class CardEditor extends React.Component {
     var tags = this.state.tags;
     var frontImage = this.state.frontImage;
     var backImage = this.state.backImage;
-    this.props.onSave(front, back, tags, frontImage, backImage);
+    var deleteFrontImage = this.state.deleteFrontImage;
+    var deleteBackImage = this.state.deleteBackImage;
+    this.props.onSave(front, back, tags, frontImage, backImage, deleteFrontImage, deleteBackImage);
   }
 
   onTagChange(tags) {
@@ -51,10 +53,21 @@ class CardEditor extends React.Component {
     this.setState({backImage: image[0], backImageUrl: image[0].preview});
   }
 
-  getImageContainer(imageUrl, addImageFn) {
+  deleteFrontImage() {
+    this.setState({frontImage: null, frontImageUrl: null, deleteFrontImage: true});
+  }
+
+  deleteBackImage() {
+    this.setState({backImage: null, backImageUrl: null, deleteBackImage: true});
+  }
+
+  getImageContainer(imageUrl, addImageFn, deleteImageFn) {
     var container;
     if (imageUrl) {
-      container = <img src={imageUrl}></img>;
+      container = <div className="img-wrap">
+                    <i className="close fa fa-times" onClick={deleteImageFn.bind(this)}></i>
+                    <img src={imageUrl}></img>
+                  </div>
     } else {
       container = ( <Dropzone onDrop={addImageFn.bind(this)}>
                       Drop an image here or click to upload.
@@ -87,8 +100,8 @@ class CardEditor extends React.Component {
     }
 
 
-    var frontImageContainer = this.getImageContainer(this.state.frontImageUrl, this.addFrontImage);
-    var backImageContainer = this.getImageContainer(this.state.backImageUrl, this.addBackImage);
+    var frontImageContainer = this.getImageContainer(this.state.frontImageUrl, this.addFrontImage, this.deleteFrontImage);
+    var backImageContainer = this.getImageContainer(this.state.backImageUrl, this.addBackImage, this.deleteBackImage);
 
     return (
       <Modal id={componentId} show={this.props.show} onHide={this.props.onClose}>

@@ -25,6 +25,8 @@ class Api::V1::CardsController < Api::V1::BaseController
     # important because cards can point to other user's content
     content = current_user.card_contents.find_by_id(@card[:card_content_id])
     if content
+      content.front_image.destroy if card_params[:delete_front_image]
+      content.back_image.destroy if card_params[:delete_back_image]
       content.update!(card_params.slice(:front, :back, :front_image, :back_image))
     else
       content = current_user.card_contents.create!(card_params.slice(:front, :back))
@@ -46,7 +48,7 @@ class Api::V1::CardsController < Api::V1::BaseController
 private
 
   def card_params
-    params.require(:card).permit(:front, :back, :content_id, :front_image, :back_image, tag_list: [])
+    params.require(:card).permit(:front, :back, :content_id, :front_image, :back_image, :delete_front_image, :delete_back_image, tag_list: [])
   end
 
 end

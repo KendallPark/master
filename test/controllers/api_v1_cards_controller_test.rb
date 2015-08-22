@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class Api::V1::CardsControllerTest < ControllerTestCase
+  setup do
+    @front_image_path = Rails.root.join('test', 'files', 'balloonsnake.jpg')
+    @back_image_path = Rails.root.join('test', 'files', 'superheroes.jpg')
+  end
   should "get an index" do
     get :index
     assert_equal CardPresenter.present(@user.cards).to_json, response.body
@@ -63,10 +67,8 @@ class Api::V1::CardsControllerTest < ControllerTestCase
 
     context "with a photograph" do
       setup do
-        @front_image = Rails.root.join('test', 'files', 'balloonsnake.jpg')
-        @front_file = Rack::Test::UploadedFile.new(@front_image, "image/jpeg")
-        @back_image = Rails.root.join('test', 'files', 'superheroes.jpg')
-        @back_file = Rack::Test::UploadedFile.new(@back_image, "image/jpeg")
+        @front_file = Rack::Test::UploadedFile.new(@front_image_path, "image/jpeg")
+        @back_file = Rack::Test::UploadedFile.new(@back_image_path, "image/jpeg")
       end
 
       should "upload the front image" do
@@ -111,6 +113,18 @@ class Api::V1::CardsControllerTest < ControllerTestCase
       }
     end
 
+    should "delete front and back image" do
+      @card.content.front_image = File.new(@front_image_path)
+      @card.content.back_image = File.new(@back_image_path)
+      @card.save!
+      assert @card.content.front_image_file_name
+      assert @card.content.back_image_file_name
+      patch :update, { id: @card.id, card: { delete_front_image: true, delete_back_image: true }}
+      @card.reload
+      assert_nil @card.content.front_image_file_name
+      assert_nil @card.content.back_image_file_name
+    end
+
     should "update front and back" do
       patch :update, { id: @card.id, card: @card_params }
       @card.reload
@@ -147,10 +161,8 @@ class Api::V1::CardsControllerTest < ControllerTestCase
     end
 
     should "update a photo" do
-      @front_image = Rails.root.join('test', 'files', 'balloonsnake.jpg')
-      @front_file = Rack::Test::UploadedFile.new(@front_image, "image/jpeg")
-      @back_image = Rails.root.join('test', 'files', 'superheroes.jpg')
-      @back_file = Rack::Test::UploadedFile.new(@back_image, "image/jpeg")
+      @front_file = Rack::Test::UploadedFile.new(@front_image_path, "image/jpeg")
+      @back_file = Rack::Test::UploadedFile.new(@back_image_path, "image/jpeg")
       card_params = {
         front_image: @front_file,
         back_image: @back_file

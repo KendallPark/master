@@ -40,3 +40,14 @@ body {
   display: flex;
   align-items: center;
 }
+
+.img-wrap {
+  position: relative;
+  .close {
+    font-size: 20px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 100;
+  }
+}

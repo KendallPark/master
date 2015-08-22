@@ -76,7 +76,7 @@ class CardManager extends React.Component {
     });
   }
 
-  update(front, back, tags, frontImage, backImage) {
+  update(front, back, tags, frontImage, backImage, deleteFrontImage, deleteBackImage) {
     var formData = new FormData();
     formData.append("card[front]", front);
     formData.append("card[back]", back);
@@ -85,6 +85,12 @@ class CardManager extends React.Component {
     }
     if(backImage){
       formData.append("card[back_image]", backImage);
+    }
+    if(deleteFrontImage){
+      formData.append("card[delete_front_image]", true)
+    }
+    if(deleteBackImage){
+      formData.append("card[delete_back_image]", true)
     }
     formData.append("card[tag_list][]", tags);
     $.ajax({
