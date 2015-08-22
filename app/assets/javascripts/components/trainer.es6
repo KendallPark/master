@@ -11,6 +11,7 @@ class Trainer extends React.Component {
       flipped: false,
       remaining: this.props.remaining,
       activeButton: null,
+      edit: false,
     };
   }
 
@@ -19,16 +20,18 @@ class Trainer extends React.Component {
   }
 
   onKeyUp(e) {
-    if(e.key === "Enter") {
+    if(!this.state.edit && e.key === "Enter") {
       this.refs.flip.getDOMNode().click();
-    } else if(this.state.flipped && [83, 68, 70, 74, 75, 76].indexOf(e.keyCode) > -1) {
+    } else if(!this.state.edit && this.state.flipped && [83, 68, 70, 74, 75, 76].indexOf(e.keyCode) > -1) {
       var score = [83, 68, 70, 74, 75, 76].indexOf(e.keyCode);
       this.score(score);
+    } else if(!this.state.edit && this.state.flipped && e.keyCode === 69) {
+      this.setState({edit: true});
     }
   }
 
   onKeyDown(e) {
-    if(this.state.flipped && [83, 68, 70, 74, 75, 76].indexOf(e.keyCode) > -1) {
+    if(!this.state.edit && this.state.flipped && [83, 68, 70, 74, 75, 76].indexOf(e.keyCode) > -1) {
       this.setState({activeButton: [83, 68, 70, 74, 75, 76].indexOf(e.keyCode)});
     }
   }
@@ -70,6 +73,47 @@ class Trainer extends React.Component {
     return number === this.state.activeButton ? " active" : "";
   }
 
+  update(front, back, tags, frontImage, backImage, deleteFrontImage, deleteBackImage) {
+    var formData = new FormData();
+    formData.append("card[front]", front);
+    formData.append("card[back]", back);
+    if(frontImage) {
+      formData.append("card[front_image]", frontImage);
+    }
+    if(backImage){
+      formData.append("card[back_image]", backImage);
+    }
+    if(deleteFrontImage){
+      formData.append("card[delete_front_image]", true)
+    }
+    if(deleteBackImage){
+      formData.append("card[delete_back_image]", true)
+    }
+    formData.append("card[tag_list][]", tags);
+    $.ajax({
+      type: "PATCH",
+      url: `/api/v1/cards/${this.state.card.id}`,
+      processData: false,
+      contentType: false,
+      data: formData,
+      success: function(card) {
+        this.setState({card: card});
+        this.close();
+      }.bind(this),
+      failure: function(error) {
+        console.log(error);
+      }
+    });
+  }
+
+  editCard(card) {
+    this.setState({ edit: true });
+  }
+
+  close() {
+    this.setState( { edit: false});
+  }
+
   render() {
     var card = this.state.card;
 
@@ -109,6 +153,12 @@ class Trainer extends React.Component {
 
     return (
       <div onKeyUp={this.onKeyUp.bind(this)} onKeyDown={this.onKeyDown.bind(this)}>
+        <CardEditor key="edit_card"
+                    mode="edit"
+                    onSave={this.update.bind(this)}
+                    onClose={this.close.bind(this)}
+                    show={this.state.edit}
+                    card={this.state.card} />
         <div className="modal show">
           <div className="modal-dialog" >
             <FlipCard disabled={true}
