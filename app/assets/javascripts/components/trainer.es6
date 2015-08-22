@@ -60,23 +60,6 @@ class Trainer extends React.Component {
     });
   }
 
-  generateCardContent(text, imageUrl) {
-    var content;
-    if(imageUrl && text) {
-      content = ( <div className="fix">
-                    <div className="desc">
-                      <p className="desc-content">{text}</p>
-                    </div>
-                    <img src={imageUrl} />
-                  </div>);
-    } else if (imageUrl && !text) {
-      content = <img src={imageUrl} />;
-    } else {
-      content = <p>{text}</p>;
-    }
-    return content;
-  }
-
   getButtonActiveClass(number) {
     return number === this.state.activeButton ? " active" : "";
   }
@@ -176,9 +159,6 @@ class Trainer extends React.Component {
 
     var backText = this.state.flipped ? card.back : null;
 
-    var frontContent = this.generateCardContent(card.front, card.front_image_url);
-    var backContent = this.generateCardContent(backText, card.back_image_url);
-
     return (
       <div onKeyUp={this.onKeyUp.bind(this)} onKeyDown={this.onKeyDown.bind(this)}>
         <CardEditor key="edit_card"
@@ -195,20 +175,20 @@ class Trainer extends React.Component {
                       bootstrap={true} >
               <div>
                 <div className="card-content vh-center">
-                  {frontContent}
+                  <CardContent text={card.front} imageUrl={card.front_image_url} />
                 </div>
                 <div className="tags-bottom">{tags}</div>
               </div>
 
               <div>
                 <div className="card-content vh-center">
-                  {backContent}
+                  <CardContent text={backText} imageUrl={card.back_image_url} />
                 </div>
               </div>
             </FlipCard>
             <ButtonToolbar>
               {buttonToolbar}
-              <div className="enter-answer"><Input ref="answer" type="text" autoFocus={true} disabled={this.state.flipped} /></div>
+              <div className="enter-answer"><Input ref="answer" type="this.props.text" autoFocus={true} disabled={this.state.flipped} /></div>
               <div className="remainder"><h5>Remaining: {this.state.remaining}</h5></div>
             </ButtonToolbar>
           </div>
@@ -216,5 +196,28 @@ class Trainer extends React.Component {
         <div className="modal-backdrop fade in" ></div>
       </div>
     );
+  }
+}
+
+class CardContent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    var content;
+    if(this.props.imageUrl && this.props.text) {
+      content = ( <div className="fix">
+                    <div className="desc">
+                      <p className="desc-content">{this.props.text}</p>
+                    </div>
+                    <img src={this.props.imageUrl} />
+                  </div>);
+    } else if (this.props.imageUrl && !this.props.text) {
+      content = <img src={this.props.imageUrl} />;
+    } else {
+      content = <p>{this.props.text}</p>;
+    }
+    return content;
   }
 }
