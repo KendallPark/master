@@ -51,6 +51,7 @@ class Trainer extends React.Component {
         trainer: { score: points }
       },
       success: function(results) {
+        React.findDOMNode(this.refs.answer.refs.input).value = "";
         this.setState({card: results.next_card, flipped: false, remaining: results.remaining, activeButton: null});
       }.bind(this),
       failure: function(error) {
@@ -207,7 +208,7 @@ class Trainer extends React.Component {
             </FlipCard>
             <ButtonToolbar>
               {buttonToolbar}
-              <div className="enter-answer"><Input type="text" autoFocus={true} disabled={this.state.flipped} /></div>
+              <div className="enter-answer"><Input ref="answer" type="text" autoFocus={true} disabled={this.state.flipped} /></div>
               <div className="remainder"><h5>Remaining: {this.state.remaining}</h5></div>
             </ButtonToolbar>
           </div>
