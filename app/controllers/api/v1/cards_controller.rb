@@ -1,6 +1,6 @@
 class Api::V1::CardsController < Api::V1::BaseController
   def index
-    @cards = current_user.cards
+    @cards = current_user.cards.recent
     render json: CardPresenter.present(@cards)
   end
 
