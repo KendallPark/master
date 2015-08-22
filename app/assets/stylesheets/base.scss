@@ -51,3 +51,32 @@ body {
     z-index: 100;
   }
 }
+
+@mixin more-btn($class,$bg){
+  .btn-#{$class} {
+
+    &.focus {
+      background-color: $bg;
+    }
+
+    &.hover,
+    &.active:hover {
+      background-color: darken($bg, 6%);
+    }
+
+    &.active {
+      background-color: darken($bg, 12%);
+      @include gradient-radial(darken($bg, 12%) 10%, $bg 11%);
+      background-size: 1000%;
+      @include box-shadow(2px 2px 4px rgba(0,0,0,.4));
+    }
+  }
+}
+
+@include more-btn(default,$btn-default-bg);
+@include more-btn(primary,$btn-primary-bg);
+@include more-btn(success,$btn-success-bg);
+@include more-btn(info,$btn-info-bg);
+@include more-btn(warning,$btn-warning-bg);
+@include more-btn(danger,$btn-danger-bg);
+@include more-btn(link,#fff);

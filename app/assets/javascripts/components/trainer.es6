@@ -1,6 +1,7 @@
 var Modal = ReactBootstrap.Modal;
 var Button = ReactBootstrap.Button;
 var ButtonToolbar = ReactBootstrap.ButtonToolbar;
+var Input = ReactBootstrap.Input;
 
 class Trainer extends React.Component {
   constructor(props) {
@@ -9,11 +10,27 @@ class Trainer extends React.Component {
       card: this.props.card,
       flipped: false,
       remaining: this.props.remaining,
+      activeButton: null,
     };
   }
 
   flip() {
     this.setState({flipped: !this.state.flipped});
+  }
+
+  onKeyUp(e) {
+    if(e.key === "Enter") {
+      this.refs.flip.getDOMNode().click();
+    } else if(this.state.flipped && [83, 68, 70, 74, 75, 76].indexOf(e.keyCode) > -1) {
+      var score = [83, 68, 70, 74, 75, 76].indexOf(e.keyCode);
+      this.score(score);
+    }
+  }
+
+  onKeyDown(e) {
+    if(this.state.flipped && [83, 68, 70, 74, 75, 76].indexOf(e.keyCode) > -1) {
+      this.setState({activeButton: [83, 68, 70, 74, 75, 76].indexOf(e.keyCode)});
+    }
   }
 
   score(points) {
@@ -24,7 +41,7 @@ class Trainer extends React.Component {
         trainer: { score: points }
       },
       success: function(results) {
-        this.setState({card: results.next_card, flipped: false, remaining: results.remaining });
+        this.setState({card: results.next_card, flipped: false, remaining: results.remaining, activeButton: null});
       }.bind(this),
       failure: function(error) {
         console.log(error);
@@ -49,6 +66,10 @@ class Trainer extends React.Component {
     return content;
   }
 
+  getButtonActiveClass(number) {
+    return number === this.state.activeButton ? " active" : "";
+  }
+
   render() {
     var card = this.state.card;
 
@@ -67,17 +88,17 @@ class Trainer extends React.Component {
       );
     }
 
-    var hide = this.state.flipped ? "" : " hide";
+    var hide = this.state.flipped ? "" : " fade";
 
     var buttonToolbar = (
       <div className="btn-batch">
-        <button className={"btn btn-info btn-md"+hide} onClick={this.score.bind(this, 0)}>WTF?</button>
-        <button className={"btn btn-danger btn-md"+hide} onClick={this.score.bind(this, 1)}>Uhh...</button>
-        <button className={"btn btn-warning btn-md"+hide} onClick={this.score.bind(this, 2)}>Damn.</button>
-        <button className="btn btn-default btn-lg fa fa-refresh" onClick={this.flip.bind(this)}></button>
-        <button className={"btn btn-success btn-md"+hide} onClick={this.score.bind(this, 3)}>Whew!</button>
-        <button className={"btn btn-primary btn-md"+hide} onClick={this.score.bind(this, 4)}>Got it!</button>
-        <button className={"btn btn-black btn-md"+hide} onClick={this.score.bind(this, 5)}>CAKE</button>
+        <button ref="zero" className={"btn btn-info btn-md"+hide+this.getButtonActiveClass(0)} onClick={this.score.bind(this, 0)} disabled={this.flipped}>WTF?</button>
+        <button ref="one" className={"btn btn-danger btn-md"+hide+this.getButtonActiveClass(1)} onClick={this.score.bind(this, 1)} disabled={this.flipped}>Uhh...</button>
+        <button ref="two" className={"btn btn-warning btn-md"+hide+this.getButtonActiveClass(2)} onClick={this.score.bind(this, 2)} disabled={this.flipped}>Damn.</button>
+        <button ref="flip" className="btn btn-default btn-lg fa fa-refresh" onClick={this.flip.bind(this)} ></button>
+        <button ref="three" className={"btn btn-success btn-md"+hide+this.getButtonActiveClass(3)} onClick={this.score.bind(this, 3)} disabled={this.flipped}>Whew!</button>
+        <button ref="four" className={"btn btn-primary btn-md"+hide+this.getButtonActiveClass(4)} onClick={this.score.bind(this, 4)} disabled={this.flipped}>Got it!</button>
+        <button ref="five" className={"btn btn-black btn-md"+hide+this.getButtonActiveClass(5)} onClick={this.score.bind(this, 5)} disabled={this.flipped}>CAKE</button>
       </div>
     );
 
@@ -87,7 +108,7 @@ class Trainer extends React.Component {
     var backContent = this.generateCardContent(backText, card.back_image_url);
 
     return (
-      <div>
+      <div onKeyUp={this.onKeyUp.bind(this)} onKeyDown={this.onKeyDown.bind(this)}>
         <div className="modal show">
           <div className="modal-dialog" >
             <FlipCard disabled={true}
@@ -109,6 +130,7 @@ class Trainer extends React.Component {
             </FlipCard>
             <ButtonToolbar>
               {buttonToolbar}
+              <div className="enter-answer"><Input type="text" autoFocus={true} disabled={this.state.flipped} /></div>
               <div className="remainder"><h5>Remaining: {this.state.remaining}</h5></div>
             </ButtonToolbar>
           </div>
