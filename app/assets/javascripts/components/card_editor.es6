@@ -6,14 +6,14 @@ class CardEditor extends React.Component {
 
   constructor(props) {
     super(props);
-    var tags = this.props.defaultTags || [];
-    if(this.props.mode === 'edit') {
-      tags = this.props.card.tags;
+    var tags = props.defaultTags || [];
+    if(props.mode === 'edit') {
+      tags = props.card.tags;
     }
     var fiu, biu;
-    if(this.props.card) {
-      fiu = this.props.card.front_image_url;
-      biu = this.props.card.back_image_url;
+    if(props.card) {
+      fiu = props.card.front_image_url;
+      biu = props.card.back_image_url;
     }
     this.state = {
       tags: tags,
@@ -21,8 +21,7 @@ class CardEditor extends React.Component {
       backImage: null,
       frontImageUrl: fiu,
       backImageUrl: biu,
-    }
-
+    };
   }
 
   onSave() {
@@ -77,12 +76,23 @@ class CardEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.mode == "new") {
+    // run this when we open the modal
+    if(nextProps.show === true && this.props.show === false) {
+      var tags = nextProps.defaultTags || [];
+      if(nextProps.mode === 'edit') {
+        tags = nextProps.card.tags;
+      }
+      var fiu, biu;
+      if(nextProps.card) {
+        fiu = nextProps.card.front_image_url;
+        biu = nextProps.card.back_image_url;
+      }
       this.setState({
+        tags: tags,
         frontImage: null,
         backImage: null,
-        frontImageUrl: null,
-        backImageUrl: null,
+        frontImageUrl: fiu,
+        backImageUrl: biu,
       });
     }
   }
