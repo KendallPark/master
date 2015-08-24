@@ -21,7 +21,9 @@ class CardEditor extends React.Component {
       backImage: null,
       frontImageUrl: fiu,
       backImageUrl: biu,
+      tagOptions: null,
     };
+    this.getTagOptions();
   }
 
   onSave() {
@@ -94,7 +96,22 @@ class CardEditor extends React.Component {
         frontImageUrl: fiu,
         backImageUrl: biu,
       });
+      this.getTagOptions();
     }
+  }
+
+  getTagOptions() {
+    $.ajax({
+      type: "GET",
+      url: `/api/v1/tags`,
+      success: function(tags) {
+        var tagOptions = _.map(this.props.tagOptions, t => ({value: t, label: t}));
+        this.setState({tagOptions: tagOptions});
+      }.bind(this),
+      failure: function(error) {
+        console.log(error);
+      }
+    });
   }
 
   render() {
@@ -138,7 +155,7 @@ class CardEditor extends React.Component {
               multi={true}
               allowCreate={true}
               placeholder="tags"
-              options={[]}
+              options={this.state.tagOptions}
               onChange={this.onTagChange.bind(this)} />
             <Button className="col-xs-2" onClick={this.onSave.bind(this)}>{buttonText}</Button>
           </div>
