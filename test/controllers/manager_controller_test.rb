@@ -1,7 +1,10 @@
 require 'test_helper'
 
-class ManagerControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class ManagerControllerTest < ControllerTestCase
+  context "#index" do
+    should "set @cards with presented cards" do
+      get :index, username: @user
+      assert assigns(:cards)
+    end
+  end
 end
