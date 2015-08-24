@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :cards
   has_many :card_contents
+  has_many :tags, -> { uniq }, as: :taggable, through: :cards
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
@@ -9,6 +10,14 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :email_prefix
   validate :mizzou_med_students_only
   alias_attribute :username, :email_prefix
+
+  def tags
+    super.reorder(nil).order(taggings_count: :desc)
+  end
+
+  def cards_tagged_with(tag_name)
+    cards.tagged_with(tag_name)
+  end
 
   def full_name
     "#{first_name} #{last_name}"
