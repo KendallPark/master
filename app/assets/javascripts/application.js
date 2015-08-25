@@ -16,6 +16,7 @@
 //= require react
 //= require react_ujs
 //= require react_bootstrap
+//= require babel/polyfill
 //= require classnames
 //= require react-input-autosize
 //= require react-select
