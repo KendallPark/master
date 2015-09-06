@@ -44,12 +44,12 @@ class Trainer extends React.Component {
   }
 
   score(points) {
+    var data = { trainer: { score: points } };
+    if(this.props.filter_tags) { data.trainer.tags = this.props.filter_tags; }
     $.ajax({
       type: "PATCH",
       url: `/train/score/${this.state.card.id}`,
-      data: {
-        trainer: { score: points }
-      },
+      data: data,
       success: function(results) {
         React.findDOMNode(this.refs.answer.refs.input).value = "";
         this.setState({card: results.next_card, flipped: false, remaining: results.remaining, activeButton: null});

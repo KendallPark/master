@@ -36,5 +36,14 @@ class TrainerControllerTest < ControllerTestCase
       assert !assigns(:card).nil?
       # assert_equal CardPresenter.present(Card.find(JSON.parse(response.body)["next_card"]["id"])).to_json, response.body
     end
+
+    should "return the next card as json with correct tagging" do
+      @card_2 = cards(:two)
+      @card_2.tag_list = ["test"]
+      @card_2.save!
+      patch :score, card_id: @card.id, trainer: @trainer_params, tags: "test"
+      assert "test", assigns(:card).tags.first
+      assert 1, assigns(:card).tags.count
+    end
   end
 end
