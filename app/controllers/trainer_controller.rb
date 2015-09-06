@@ -1,6 +1,6 @@
 class TrainerController < ApplicationController
   def index
-    @cards = current_user.next_cards
+    @cards = current_user.next_cards(params.slice(:tags))
     @remaining = @cards.count
     @card = CardPresenter.present(@cards.sample)
   end

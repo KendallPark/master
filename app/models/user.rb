@@ -27,8 +27,12 @@ class User < ActiveRecord::Base
     username
   end
 
-  def next_cards
-    cards.where(cards.arel_table[:next_repetition].lteq(Date.today))
+  def next_cards(options={})
+    if options[:tags]
+      cards_tagged_with(options[:tags]).where(cards.arel_table[:next_repetition].lteq(Date.today))
+    else
+      cards.where(cards.arel_table[:next_repetition].lteq(Date.today))
+    end
   end
 
   def next_card
