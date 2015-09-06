@@ -172,7 +172,6 @@ var FlipCard = React.createClass({
               'panel': this.props.bootstrap,
               'panel-primary': this.props.bootstrap,
             }),
-            tabIndex: 0,
             ref: 'front',
             tabIndex: -1,
             'aria-hidden': this.state.isFlipped
