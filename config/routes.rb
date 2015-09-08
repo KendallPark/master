@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   get "train", to: "trainer#index"
 
+  get "browse", to: "browse#index"
+
   patch "train/score/:card_id", to: "trainer#score"
 
   scope ":username", :as => "user" do
