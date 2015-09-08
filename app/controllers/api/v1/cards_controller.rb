@@ -12,7 +12,7 @@ class Api::V1::CardsController < Api::V1::BaseController
     else
       content = current_user.card_contents.create!(card_params.slice(:front, :back, :front_image, :back_image))
     end
-    @card = current_user.cards.create!(card_content_id: content[:id], tag_list: tag_list)
+    @card = current_user.cards.create!(card_content_id: content[:id], tag_list: tag_list, original_content_id: content[:id])
     render json: CardPresenter.present(@card)
   end
 

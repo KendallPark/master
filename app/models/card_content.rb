@@ -1,6 +1,7 @@
 class CardContent < ActiveRecord::Base
   belongs_to :user
   has_many :cards
+  has_many :remixed_cards, foreign_key: "original_content_id", source: :card, class_name: "Card"
   has_attached_file :front_image, styles: {
     thumb: '250x180>',
     medium: '600x430>'
@@ -14,11 +15,11 @@ class CardContent < ActiveRecord::Base
   validates_attachment_content_type :front_image, :content_type => /\Aimage\/.*\Z/
 
   def remixed?
-    cards.where.not(user_id: user_id).any?
+    remixed_cards.where.not(user_id: user_id).any?
   end
 
   def remixed_by?(this_user)
-    cards.where(user_id: this_user.id).any?
+    remixed_cards.where(user_id: this_user.id).any?
   end
 
   def original_tags
