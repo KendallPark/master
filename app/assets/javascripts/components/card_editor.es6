@@ -105,7 +105,7 @@ class CardEditor extends React.Component {
       type: "GET",
       url: `/api/v1/tags`,
       success: function(tags) {
-        var tagOptions = _.map(this.props.tagOptions, t => ({value: t, label: t}));
+        var tagOptions = _.map(tags, t => ({value: t, label: t}));
         this.setState({tagOptions: tagOptions});
       }.bind(this),
       failure: function(error) {
