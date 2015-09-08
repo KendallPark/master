@@ -17,6 +17,10 @@ class Card < ActiveRecord::Base
     card_content.back
   end
 
+  def remixed_by?(the_user)
+    card_content.remixed_by?(the_user)
+  end
+
 private
 
   def set_initial_next_repetition

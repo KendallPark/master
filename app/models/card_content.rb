@@ -14,7 +14,11 @@ class CardContent < ActiveRecord::Base
   validates_attachment_content_type :front_image, :content_type => /\Aimage\/.*\Z/
 
   def remixed?
-    cards.where.not(id: user_id).any?
+    cards.where.not(user_id: user_id).any?
+  end
+
+  def remixed_by?(this_user)
+    cards.where(user_id: this_user.id).any?
   end
 
 end
