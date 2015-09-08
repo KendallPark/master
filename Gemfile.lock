@@ -297,7 +297,7 @@ DEPENDENCIES
   factory-helper
   factory_girl_rails
   figaro
-  font-awesome-sass (~> 4.3.0)
+  font-awesome-sass
   jbuilder (~> 2.0)
   jquery-rails
   letter_opener

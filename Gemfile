@@ -41,7 +41,7 @@ gem 'lodash-rails'
 
 gem 'bootstrap-sass'
 gem 'bootswatch-rails'
-gem 'font-awesome-sass', '~> 4.3.0'
+gem 'font-awesome-sass'
 
 gem 'acts-as-taggable-on', '~> 3.4'
 
