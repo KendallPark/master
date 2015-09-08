@@ -28,8 +28,12 @@ class Api::V1::CardsController < Api::V1::BaseController
       content.front_image.destroy if card_params[:delete_front_image]
       content.back_image.destroy if card_params[:delete_back_image]
       content.update!(card_params.slice(:front, :back, :front_image, :back_image))
-    else
+    else # we're created a duplicate of a cloned card
+      original_content = CardContent.find(@card[:card_content_id])
       content = current_user.card_contents.create!(card_params.slice(:front, :back))
+      content.front_image = original_content.front_image unless card_params[:delete_front_image]
+      content.back_image = original_content.back_image unless card_params[:delete_back_image]
+      content.save!
       @card.assign_attributes(card_content_id: content[:id])
     end
     if card_params[:tag_list]
