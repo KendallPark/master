@@ -1,5 +1,6 @@
 class ManagerController < ApplicationController
   def index
-    @cards = CardPresenter.present(current_user.cards.recent)
+    @browse_only = params[:username] != current_user.username
+    @cards = CardPresenter.present(current_user.cards.recent, {user: current_user})
   end
 end
