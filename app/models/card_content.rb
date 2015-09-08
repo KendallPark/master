@@ -21,4 +21,10 @@ class CardContent < ActiveRecord::Base
     cards.where(user_id: this_user.id).any?
   end
 
+  def original_tags
+    original_card = cards.where(user_id: user_id)
+    return [] unless original_card.any?
+    original_card.first.tag_list
+  end
+
 end
