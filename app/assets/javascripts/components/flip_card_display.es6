@@ -35,6 +35,22 @@ class FlipCardDisplay extends BaseDisplayObject{
     var frontContent = this.generateCardContent(card.front, card.front_image_thumb_url);
     var backContent = this.generateCardContent(card.back, card.back_image_thumb_url);
     var tags = this.getTags(card.tags);
+    var editControls;
+    if(this.props.browseOnly && !card.copied ) {
+      editControls = <div className="edit-controls">
+        <a href={"/"+card.owner_username+"/cards"} className="left">{card.owner_name}</a>
+        <div className="right" onClick={this.props.onClone.bind(this, card, this.props.index)}><i className="fa fa-files-o"></i></div>
+      </div>
+    } else if(this.props.browseOnly && card.copied) {
+      editControls = <div className="edit-controls">
+        <a href={"/"+card.owner_username+"/cards"} className="left">{card.owner_name}</a>
+      </div>
+    } else {
+      editControls = <div className="edit-controls">
+        <div className="left" onClick={this.props.onDelete.bind(this, card.id)}><i className="fa fa-trash-o"></i></div>
+        <div className="right" onClick={this.props.onEdit.bind(this, card)}><i className="fa fa-pencil"></i></div>
+      </div>
+    }
     return (
       <FlipCard style={itemStyle}
                 disabled={true}
@@ -42,10 +58,7 @@ class FlipCardDisplay extends BaseDisplayObject{
                 onDoubleClick={this.props.onDoubleClick.bind(this, this.props.item.flipped, this.props.index)}
                 bootstrap={true} >
         <div>
-          <div className="edit-controls">
-            <a href="#" className="left" onClick={this.props.onDelete.bind(this, card.id)}><i className="fa fa-trash-o"></i></a>
-            <a href="#" className="right" onClick={this.props.onEdit.bind(this, card)}><i className="fa fa-pencil"></i></a>
-          </div>
+          {editControls}
           <div className="card-content vh-center">
             {frontContent}
           </div>

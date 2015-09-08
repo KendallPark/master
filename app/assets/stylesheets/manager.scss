@@ -20,18 +20,24 @@
     }
 
     div.edit-controls {
-      a.left {
-        position: relative;
-        float: left;
+      div.left {
+        position: absolute;
         top: 5px;
         left: 5px;
+        cursor: pointer;
       }
 
-      a.right {
-        position: relative;
-        float: right;
+      a.left {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+      }
+
+      div.right {
+        position: absolute;
         top: 5px;
         right: 5px;
+        cursor: pointer;
       }
 
       i {

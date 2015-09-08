@@ -111,6 +111,25 @@ class CardManager extends React.Component {
     });
   }
 
+  clone(card, cardIndex) {
+    console.log(card);
+    $.ajax({
+      type: "POST",
+      url: `/api/v1/cards`,
+      data: { card: { content_id: card.content_id } },
+      success: function(newCard) {
+        var toChange = {};
+        toChange[cardIndex] = { card: { copied: { $set: true } } };
+        var newItems = React.addons.update(this.state.items, toChange);
+        this.setState( { items: newItems } );
+        this.close();
+      }.bind(this),
+      failure: function(error) {
+        console.log(error);
+      }
+    });
+  }
+
   editCard(card) {
     this.setState({ edit: card, showModal: true, editCardTags: card.tags.toString()  });
   }
@@ -154,10 +173,25 @@ class CardManager extends React.Component {
       <FlipCardDisplay  onDoubleClick={this.flip.bind(this)}
                         onDelete={this.deleteCard.bind(this)}
                         onEdit={this.editCard.bind(this)}
+                        browseOnly={this.props.browse_only}
+                        onClone={this.clone.bind(this)}
                         />
     );
-    return (
-      <div>
+    var header;
+    if(this.props.browse_only) {
+      header = (
+        <div id="manager_header" className="row">
+          <div className="col-md-12">
+          <Input
+            type='text'
+            placeholder='search'
+            ref='search-cards'
+            onChange={this.onFilter.bind(this)} />
+          </div>
+        </div>
+      );
+    } else {
+      header = (
         <div id="manager_header" className="row">
           <div className="col-md-3">
           <Button id="new_card_button" onClick={this.newCard.bind(this)}>New Card</Button>
@@ -170,6 +204,11 @@ class CardManager extends React.Component {
             onChange={this.onFilter.bind(this)} />
           </div>
         </div>
+      );
+    }
+    return (
+      <div>
+        {header}
         {modalInstance}
         <div id="manager_body">
           <AbsoluteGrid items={this.state.items}
