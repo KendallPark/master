@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150908025127) do
+ActiveRecord::Schema.define(version: 20151019020510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,17 +33,19 @@ ActiveRecord::Schema.define(version: 20150908025127) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.integer  "user_id",                              null: false
-    t.integer  "card_content_id",                      null: false
+    t.integer  "user_id",                                null: false
+    t.integer  "card_content_id",                        null: false
     t.decimal  "easiness_factor",        default: 2.5
-    t.integer  "number_repetitions",     default: 0,   null: false
+    t.integer  "number_repetitions",     default: 0,     null: false
     t.integer  "quality_of_last_recall"
-    t.date     "next_repetition",                      null: false
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.date     "next_repetition",                        null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "repetition_interval"
     t.date     "last_studied"
-    t.integer  "original_content_id",                  null: false
+    t.integer  "original_content_id",                    null: false
+    t.boolean  "retired",                default: false, null: false
+    t.datetime "retired_at"
   end
 
   create_table "taggings", force: :cascade do |t|

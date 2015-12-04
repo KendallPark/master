@@ -7,34 +7,54 @@
 one:
   user: kendall
   card_content: hello
+  original_content: hello
   next_repetition: <%= Date.today %>
 
 two:
   user: kendall
   card_content: brett_howdy
+  original_content: brett_howdy
   next_repetition: <%= Date.yesterday %>
 
 three:
   user: kendall
   card_content: brett_howdy
+  original_content: brett_howdy
   next_repetition: <%= Date.tomorrow %>
 
 brett_one:
   user: brett
   card_content: howdy
+  original_content: howdy
   next_repetition: <%= Date.today %>
 
 brett_remix:
   user: brett
   card_content: hello
+  original_content: hello
   next_repetition: <%= Date.today %>
 
 kendall_remix:
   user: kendall
   card_content: brett_howdy
+  original_content: brett_howdy
   next_repetition: <%= Date.today %>
 
 only_one_card:
   user: kendall
   card_content: only_one_content
+  original_content: only_one_content
   next_repetition: <%= Date.today %>
+
+only_one_other_card:
+  user: kendall
+  card_content: only_one_other_content
+  original_content: only_one_other_content
+  next_repetition: <%= Date.today %>
+
+retired:
+  user: kendall
+  card_content: brett_howdy
+  original_content: brett_howdy
+  next_repetition: <%= Date.today %>
+  retired: true

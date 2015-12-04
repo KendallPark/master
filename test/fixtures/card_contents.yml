@@ -18,3 +18,8 @@ only_one_content:
   user: kendall
   front: yup
   back: yip
+
+only_one_other_content:
+  user: kendall
+  front: another
+  back: thingy
