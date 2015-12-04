@@ -21,7 +21,7 @@ class UserTest < ActiveSupport::TestCase
   context "#next_cards" do
     should "get the next card" do
       next_cards = @user.next_cards
-      assert_equal 5, next_cards.length
+      assert_equal 6, next_cards.length
     end
   end
 

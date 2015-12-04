@@ -52,6 +52,13 @@ only_one_other_card:
   original_content: only_one_other_content
   next_repetition: <%= Date.today %>
 
+to_be_retired:
+  user: kendall
+  card_content: brett_howdy
+  original_content: brett_howdy
+  next_repetition: <%= Date.today %>
+  retired: false
+
 retired:
   user: kendall
   card_content: brett_howdy

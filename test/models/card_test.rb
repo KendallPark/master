@@ -17,6 +17,15 @@ class CardTest < ActiveSupport::TestCase
     should "display the card in the unscoped" do
       refute Card.unscoped.all.find_by(id: @retired.id).nil?
     end
+    should "retire a card with retire! method" do
+      @to_be_retired = cards(:to_be_retired)
+      refute @to_be_retired.retired, "card should not be retired"
+      assert @to_be_retired.retired_at.nil?, "card should not have a retired_at date"
+      @to_be_retired.reload
+      @to_be_retired.retire!
+      assert @to_be_retired.retired, "card should be retired"
+      refute @to_be_retired.retired_at.nil?, "card should have a retired_at date"
+    end
   end
 
   context "when deleting a card" do

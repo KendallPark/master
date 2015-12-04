@@ -4,7 +4,7 @@ class TrainerControllerTest < ControllerTestCase
   context "#index" do
     should "return a random next card" do
       get :index
-      assert_equal 5, assigns(:cards).count
+      assert_equal 6, assigns(:cards).count
     end
 
     should "return a random next card of a certain tag" do

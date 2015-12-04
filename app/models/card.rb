@@ -24,6 +24,12 @@ class Card < ActiveRecord::Base
     card_content.remixed_by?(the_user)
   end
 
+  def retire!
+    self.retired = true
+    self.retired_at = Time.now
+    self.save!
+  end
+
 private
 
   def set_initial_next_repetition
