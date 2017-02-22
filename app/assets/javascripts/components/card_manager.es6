@@ -14,6 +14,7 @@ class CardManager extends React.Component {
       newCardTags: [],
       items: items,
       edit: null,
+      import: null,
     };
   }
 
@@ -29,7 +30,11 @@ class CardManager extends React.Component {
   }
 
   close() {
-    this.setState( { showModal: false, edit: null});
+    this.setState( { showModal: false, edit: null, import: null });
+  }
+
+  importCard() {
+    this.setState( { showModal: true, import: true } );
   }
 
   onFilter(e) {
@@ -41,6 +46,30 @@ class CardManager extends React.Component {
     });
     var newItems = React.addons.update(this.state.items, toChange);
     this.setState( { items: newItems });
+  }
+
+  import(text) {
+    var data = { import: { xml: text } };
+    $.ajax({
+      type: "POST",
+      url: `/api/v1/cards/import`,
+      data: data,
+      success: function(cards) {
+        var newCardsArray = this.state.items.slice();
+        for (var card in cards) {
+          newCardsArray.unshift({ card: card,
+                                  key: card.id,
+                                  flipped: false,
+                                  originalIndex: this.state.items.length,
+                                  filtered: false });
+        }
+        this.setState({items: newCardsArray});
+        this.close();
+      }.bind(this),
+      failure: function(error) {
+        console.log(error);
+      }
+    });
   }
 
   save(front, back, tags, frontImage, backImage) {
@@ -154,7 +183,12 @@ class CardManager extends React.Component {
 
   render() {
     var modalInstance;
-    if (this.state.edit === null) {
+    if (this.state.import) {
+      modalInstance = ( <CardImport key="import_card"
+                                    show={this.state.showModal}
+                                    onImport={this.import.bind(this)}
+                                    onClose={this.close.bind(this)} />);
+    } else if (this.state.edit === null) {
       modalInstance = (<CardEditor  key="new_card"
                                     mode="new"
                                     onSave={this.save.bind(this)}
@@ -194,9 +228,12 @@ class CardManager extends React.Component {
       header = (
         <div id="manager_header" className="row">
           <div className="col-md-3">
-          <Button id="new_card_button" onClick={this.newCard.bind(this)}>New Card</Button>
+            <Button id="new_card_button" onClick={this.newCard.bind(this)}>New Card</Button>
           </div>
-          <div className="col-md-9">
+          <div className="col-md-3">
+            <Button id="mass_import_button" onClick={this.importCard.bind(this)}>Import</Button>
+          </div>
+          <div className="col-md-6">
           <Input
             type='text'
             placeholder='search'

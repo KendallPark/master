@@ -111,6 +111,7 @@ GEM
       thor (~> 0.14)
     font-awesome-sass (4.3.2.1)
       sass (~> 3.2)
+    fuzzy_match (2.1.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -188,10 +189,13 @@ GEM
       railties (>= 3.2.11)
     rails-assets-autosize (3.0.8)
     rails-assets-classnames (1.2.2)
+    rails-assets-commonmark (0.27.0)
     rails-assets-react-input-autosize (0.4.5)
     rails-assets-react-select (0.6.2)
       rails-assets-classnames (>= 1.2.2, < 2)
       rails-assets-react-input-autosize (>= 0.4.3, < 0.5)
+    rails-assets-remarkable (1.7.1)
+    rails-assets-xss-filters (1.2.7)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.6)
@@ -212,6 +216,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.15.0)
     rake (10.4.2)
+    rb-readline (0.5.3)
     rdoc (4.2.0)
     react-bootstrap-rails (0.23.7)
       rails (>= 3.1)
@@ -298,12 +303,14 @@ DEPENDENCIES
   factory_girl_rails
   figaro
   font-awesome-sass
+  fuzzy_match
   jbuilder (~> 2.0)
   jquery-rails
   letter_opener
   lodash-rails
   minitest
   minitest-reporters
+  nokogiri
   paperclip
   pg
   pry
@@ -313,9 +320,13 @@ DEPENDENCIES
   rails-api
   rails-assets-autosize!
   rails-assets-classnames!
+  rails-assets-commonmark!
   rails-assets-react-input-autosize!
   rails-assets-react-select!
+  rails-assets-remarkable!
+  rails-assets-xss-filters!
   rails_12factor
+  rb-readline
   react-bootstrap-rails
   react-rails (~> 1.0)
   rr
@@ -331,4 +342,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.10.6
+   1.12.5

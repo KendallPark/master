@@ -3,7 +3,9 @@ class TrainerController < ApplicationController
     @filter_tags = params[:tags]
     @cards = current_user.next_cards(params.slice(:tags))
     @remaining = @cards.count
-    @card = CardPresenter.present(@cards.first(20).sample)
+    @tags = TagPresenter.present(current_user.tags)
+    @card = CardPresenter.present(@cards.order(:updated_at).first(100).sample)
+    # @card = CardPresenter.present(@cards.first(30).sample)
   end
 
   def score
@@ -11,7 +13,8 @@ class TrainerController < ApplicationController
     prev_card.process_recall_result(trainer_params[:score].to_i)
     prev_card.save!
     @cards = current_user.next_cards(trainer_params.slice(:tags))
-    @card = CardPresenter.present(@cards.first(20).sample)
+    @card = CardPresenter.present(@cards.order(:updated_at).first(100).sample)
+    # @card = CardPresenter.present(@cards.first(30).sample)
     render json: { next_card: @card, remaining: @cards.count }
   end
 

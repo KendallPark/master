@@ -51,10 +51,73 @@ class Api::V1::CardsController < Api::V1::BaseController
     render nothing: true, status: :ok
   end
 
+  def import
+    xml_doc = Nokogiri::XML(import_params[:xml])
+    cards = parse_xml(xml_doc.xpath('./opml/body/outline'))
+    render json: CardPresenter.present(cards)
+  end
+
 private
+
+  def parse_xml(xml, tags=[])
+    cards = []
+    xml.each do |elem|
+      next unless elem.respond_to?(:attributes)
+      title = elem.attributes["text"].value.gsub(/^\*+/, "").gsub(/^\!+/, "").strip
+      if title.include? "#q"
+        title = title.gsub("#q", "").strip
+        title = title.split(",").first
+        cards.concat parse_questions(elem.xpath("./outline"), tags + [title])
+      else
+        parse_xml(elem.xpath("./outline"), tags + [title])
+      end
+    end
+    return cards
+  end
+
+  def parse_questions(xml, tags)
+    cards = []
+    # fz = FuzzyMatch.new(current_user.card_contents.select("*"), read: :front)
+
+    xml.each do |elem|
+      next unless elem.respond_to?(:attributes)
+      question = elem.attributes["text"].value.gsub(/^\*+/, "").gsub(/^\!+/, "").strip
+      answer = ""
+      answers = elem.xpath("./outline")
+      if answers.size == 1
+        answer = answers.first.attributes["text"].value
+      else
+        answer = parse_list(answers)
+      end
+      question = question
+      next if current_user.card_contents.find_by(front: question, back: answer)
+      # if existing_content && existing_content.cards.first && existing_content.cards.first.tag_list == tags
+      #   existing_content.update!(front: question, back: answer)
+      # else
+      content = current_user.card_contents.create!(front: question, back: answer)
+      card = current_user.cards.create!(card_content_id: content[:id], tag_list: tags, original_content_id: content[:id])
+      cards << card
+      # end
+    end
+    return cards
+  end
+
+  def parse_list(xml, tab="")
+    list = ""
+    xml.each do |elem|
+      next unless elem.respond_to?(:attributes)
+      list << "#{tab}- #{elem.attributes['text'].value}\n"
+      list << parse_list(elem.xpath("./outline"), "  ")
+    end
+    return list
+  end
 
   def card_params
     params.require(:card).permit(:front, :back, :content_id, :front_image, :back_image, :delete_front_image, :delete_back_image, tag_list: [])
+  end
+
+  def import_params
+    params.require(:import).permit(:xml)
   end
 
 end

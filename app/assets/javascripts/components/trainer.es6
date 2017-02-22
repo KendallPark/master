@@ -8,6 +8,7 @@ var OverlayTrigger = ReactBootstrap.OverlayTrigger;
 class Trainer extends React.Component {
   constructor(props) {
     super(props);
+    var tagOptions = _.map(this.props.tagOptions, t => ({value: t, label: t}));
     this.state = {
       card: this.props.card,
       flipped: false,
@@ -15,6 +16,8 @@ class Trainer extends React.Component {
       activeButton: null,
       edit: false,
       showShortcuts: false,
+      tagOptions: tagOptions,
+      tags: this.props.filter_tags,
     };
   }
 
@@ -105,6 +108,20 @@ class Trainer extends React.Component {
     this.setState( { edit: false});
   }
 
+  onTagChange(tags) {
+    var newTags = tags.split(",");
+    if(newTags.length === 1 && newTags[0] === "") {
+      newTags = [];
+    }
+    this.setState( { tags: newTags } );
+    console.log("hello");
+    window.location.assign(`/train?tags=${newTags}`);
+  }
+
+  onTagSelectClose() {
+    console.log("why doesn't this work?");
+  }
+
   render() {
     var card = this.state.card;
 
@@ -160,7 +177,7 @@ class Trainer extends React.Component {
     var backText = this.state.flipped ? card.back : null;
 
     return (
-      <div onKeyUp={this.onKeyUp.bind(this)} onKeyDown={this.onKeyDown.bind(this)}>
+      <div>
         <CardEditor key="edit_card"
                     mode="edit"
                     onSave={this.update.bind(this)}
@@ -169,28 +186,44 @@ class Trainer extends React.Component {
                     card={this.state.card} />
         <div className="modal show">
           <div className="modal-dialog" >
-            <FlipCard disabled={true}
-                      flipped={this.state.flipped}
-                      // onDoubleClick={}
-                      bootstrap={true} >
-              <div>
-                <div className="tags-top">{tags}</div>
-                <div className="card-content vh-center">
-                  <CardContent text={card.front} imageUrl={card.front_image_url} />
-                </div>
-              </div>
 
-              <div>
-                <div className="card-content vh-center">
-                  <CardContent text={backText} imageUrl={card.back_image_url} />
+          <Select
+            ref="tags"
+            value={this.state.tags}
+            delimiter=","
+            multi={true}
+            allowCreate={false}
+            placeholder="tags"
+            options={this.state.tagOptions}
+            onChange={this.onTagChange.bind(this)}
+            onClose={this.onTagSelectClose.bind(this)}
+            onOpen={this.onTagSelectClose.bind(this)} />
+
+            <div onKeyUp={this.onKeyUp.bind(this)} onKeyDown={this.onKeyDown.bind(this)}>
+
+              <FlipCard disabled={true}
+                        flipped={this.state.flipped}
+                        // onDoubleClick={}
+                        bootstrap={true} >
+                <div>
+                  <div className="tags-top">{tags}</div>
+                  <div className="card-content vh-center">
+                    <CardContent text={card.front} imageUrl={card.front_image_url} />
+                  </div>
                 </div>
-              </div>
-            </FlipCard>
-            <ButtonToolbar>
-              {buttonToolbar}
-              <div className="enter-answer"><Input ref="answer" type="this.props.text" autoFocus={true} disabled={this.state.flipped} /></div>
-              <div className="remainder"><h5>Remaining: {this.state.remaining}</h5></div>
-            </ButtonToolbar>
+
+                <div>
+                  <div className="card-content vh-center">
+                    <CardContent text={backText} imageUrl={card.back_image_url} />
+                  </div>
+                </div>
+              </FlipCard>
+              <ButtonToolbar>
+                {buttonToolbar}
+                <div className="enter-answer"><Input ref="answer" type="this.props.text" autoFocus={true} disabled={this.state.flipped} /></div>
+                <div className="remainder"><h5>Remaining: {this.state.remaining}</h5></div>
+              </ButtonToolbar>
+            </div>
           </div>
         </div>
         <div className="modal-backdrop fade in" ></div>
@@ -216,7 +249,7 @@ class CardContent extends React.Component {
     } else if (this.props.imageUrl && !this.props.text) {
       content = <img src={this.props.imageUrl} />;
     } else {
-      content = <p>{this.props.text}</p>;
+      content = <div><Remarkable>{this.props.text}</Remarkable></div>;
     }
     return content;
   }

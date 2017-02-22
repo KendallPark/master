@@ -51,11 +51,17 @@ gem 'rails-api'
 gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
 
+gem 'nokogiri'
+gem 'fuzzy_match'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-react-input-autosize'
   gem 'rails-assets-react-select'
   gem 'rails-assets-autosize'
+  gem 'rails-assets-commonmark'
+  gem 'rails-assets-xss-filters'
+  gem 'rails-assets-remarkable'
 end
 
 group :test do
@@ -85,4 +91,5 @@ group :development, :test do
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
   gem 'factory-helper'
+  gem 'rb-readline'
 end

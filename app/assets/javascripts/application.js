@@ -22,5 +22,8 @@
 //= require react-select
 //= require lodash
 //= require autosize
+//= require commonmark
+//= require xss-filters
+//= require remarkable
 //= require components
 //= require_tree .

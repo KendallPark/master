@@ -67,7 +67,7 @@
     }
   }
 
-  #new_card_button {
+  #new_card_button, #mass_import_button {
     display: block;
     width: 100%;
   }
@@ -81,7 +81,7 @@
   }
 }
 
-#new_card_modal, #edit_card_modal {
+#new_card_modal, #edit_card_modal, #import_card_modal {
   textarea {
     margin-top: 20px;
     height: 100px;

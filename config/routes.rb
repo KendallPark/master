@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :cards
       resources :tags
       get 'card/blank', to: 'cards#blank'
+      post 'cards/import', to: 'cards#import'
     end
   end
 
